@@ -140,10 +140,7 @@ def run_scraper():
             json.dump(new_articles, f, indent=4, ensure_ascii=False)
         print(f"✅ {len(new_articles)} naye articles '1.json' me overwrite ho gaye hain.")
 
-        with open("all.txt", "a", encoding="utf-8") as f:
-            for article in new_articles:
-                f.write(json.dumps(article, ensure_ascii=False) + "\n")
-        print(f"✅ Sabhi naye articles 'all.txt' me history ke roop me add ho gaye hain.")
+        # 👉 REMOVED: 'all.txt' append logic completely deleted 👈
 
         save_history(scraped_history)
         print("\n🎉 Success! Scraper ka kaam complete ho gaya.")
