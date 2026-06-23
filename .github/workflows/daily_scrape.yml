@@ -16,6 +16,10 @@ jobs:
   run-scraper-pipeline:
     runs-on: ubuntu-latest
 
+    # GitHub Actions ko file commit aur write karne ki explicit permission dena zaroori hai
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout Repository Code
       uses: actions/checkout@v4
@@ -25,28 +29,30 @@ jobs:
       with:
         python-version: '3.10'
 
-    # 👉 FIX APPLIED HERE: Added trafilatura explicitly in the dependencies 👈
+    # 👉 FIX APPLIED HERE: Added all required modules explicitly 👈
     - name: Install System Dependencies
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        # Fallback dependencies including trafilatura
-        pip install requests beautifulsoup4 trafilatura
+        pip install requests beautifulsoup4 trafilatura feedparser
 
     - name: Execute Scraper Engine
       run: |
         python scraper.py
 
-    - name: Commit and Push Generated 1.json
+    # 👉 SMART SYNC APPLIED HERE: Tracks 1.json, all.txt, and scraped_urls.json safely 👈
+    - name: Commit and Push Generated Data Files
       run: |
         git config --global user.name "Ghost-Bot"
         git config --global user.email "bot@ghoststudio.internal"
         
-        git add 1.json
+        # Add all files that scraper.py generates/updates
+        git add 1.json all.txt scraped_urls.json
+        
         if git diff --staged --quiet; then
-          echo "⚠️ No changes detected in 1.json. Skipping push."
+          echo "⚠️ No changes detected in data files. Skipping push."
         else
-          git commit -m "🤖 Automate: Fresh Factual Data Scraped [$(date -u +'%Y-%m-%d %H:%M:%S' -d '+5 hours +30 minutes') IST]"
-          git push
-          echo "✅ Success: 1.json updated and repository synchronized."
+          git commit -m "🤖 Automate: Fresh Data Pipeline Synced [$(date -u +'%Y-%m-%d %H:%M:%S' -d '+5 hours +30 minutes') IST]"
+          git push origin main
+          echo "✅ Success: Repository synchronized flawlessly."
         fi
