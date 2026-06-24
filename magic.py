@@ -7,16 +7,14 @@ from google.genai import types
 from google.genai.errors import APIError
 
 # =========================================================
-# 1. INITIALIZATION & NEW SDK AUTHENTICATION
+# 1. INITIALIZATION & AUTHENTICATION
 # =========================================================
-# New Google GenAI SDK automatically looks for GEMINI_API_KEY env variable
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
 if not API_KEY:
     print("❌ CRITICAL ERROR: GEMINI_API_KEY environment variable missing in GitHub Secrets.")
     sys.exit(1)
 
-# Initialize new client standard for 2026
 client = genai.Client()
 MODEL_NAME = "gemini-1.5-flash"
 
@@ -24,7 +22,6 @@ MODEL_NAME = "gemini-1.5-flash"
 # 2. MASTER PROMPT DESIGN (STRICT JSON OUTPUT)
 # =========================================================
 def process_news_with_ai(title, raw_content):
-    # Ultra-Strict Master Prompt engineering for multiple sections
     prompt = f"""
     You are a strict, zero-hallucination data extraction engine for competitive exams (SSC, Banking, Military).
     Analyze the provided input news title and raw text, then generate a JSON object matching the exact schema below.
@@ -39,7 +36,8 @@ def process_news_with_ai(title, raw_content):
        - antonyms: Exactly 3 standard antonyms in English.
     4. english_booster: Create an exam-style question based strictly on the sentence structure of the news:
        - error_spotting: Rephrase a sentence from the news to introduce a clear grammatical error (e.g., subject-verb disagreement). Provide the broken 'sentence', the 'error' word, the 'correction', and the grammar 'rule' violated.
-    5. STRICTLY output raw JSON only. Do NOT wrap the response in markdown code blocks like ```json ... ```. No meta-commentary or extra text allowed.
+    5. STRICTLY output raw JSON only. Do NOT wrap the response in markdown code blocks like ```json ... 
+```. No meta-commentary or extra text allowed.
 
     Desired JSON Schema Format:
     {{
@@ -75,61 +73,84 @@ def process_news_with_ai(title, raw_content):
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            # Using the updated 2026 genai structure
             response = client.models.generate_content(
                 model=MODEL_NAME,
                 contents=prompt,
                 config=types.GenerateContentConfig(
-                    temperature=0.0,  # Zero creativity
-                    response_mime_type="application/json"  # Enforce structural JSON output
+                    temperature=0.0,
+                    response_mime_type="application/json"
                 ),
             )
             
             clean_json_str = response.text.strip()
+            # LIVE DEBUG PRINT: AI ne kya return kiya wo terminal me dikhega
+            print(f"      🔍 Raw AI Response Snippet: {clean_json_str[:150]}...")
+            
             if clean_json_str.startswith("```json"):
-                clean_json_str = clean_json_str.replace("```json", "").replace("```", "").strip()
+                clean_json_str = clean_json_str.replace("
+```json", "").replace("```", "").strip()
                 
             return json.loads(clean_json_str)
 
         except APIError as e:
+            print(f"      ⚠️ API Error (Attempt {attempt+1}): {e}")
             if e.code == 429:
-                print(f"   ⚠️ Rate Limit Hit! Sleeping 60s before retry {attempt+1}/{max_retries}...")
                 time.sleep(60)
                 continue
-            else:
-                print(f"   ❌ Generation Error: {e}")
-                return None
+            return None
         except Exception as e:
-            print(f"   ❌ Unexpected Parsing Error: {e}")
+            print(f"      ⚠️ Parsing Error: {e}")
             return None
     return None
 
 # =========================================================
-# 3. MAIN EXECUTION PIPELINE
+# 3. MAIN EXECUTION PIPELINE (SUPER DEBUG MODE)
 # =========================================================
 def main():
-    print("🚀 Starting Step 2: Master AI Extraction Engine (New SDK)...")
+    print("🚀 Starting Step 2: Master AI Extraction Engine...")
 
     if not os.path.exists("1.json"):
-        print("❌ Error: '1.json' not found. Run scraper.py first.")
+        print("❌ Error: '1.json' not found.")
         return
 
     with open("1.json", "r", encoding="utf-8") as f:
         try:
             raw_data = json.load(f)
         except json.JSONDecodeError:
-            print("❌ Error: '1.json' is corrupted.")
+            print("❌ Error: '1.json' formatting is broken or corrupted.")
             return
 
-    # Take top 10 fresh news items
-    target_news = raw_data[:10]
+    print(f"📊 Total raw articles found in 1.json: {len(raw_data)}")
+
+    # Strict content checking with explicit feedback
+    valid_news = []
+    for item in raw_data:
+        title = item.get('title', '').strip()
+        content = item.get('content', '').strip()
+        
+        # Check condition manual tracing
+        if title and len(content) > 10:
+            valid_news.append(item)
+        else:
+            print(f"   ⚠️ Item Skipped Prematurely -> Title: '{title[:30]}...', Content Length: {len(content)}")
+
+    print(f"✅ Total valid articles left for AI after filtering: {len(valid_news)}")
+
+    if not valid_news:
+        print("⚠️ WARNING: No valid items to push to Gemini. Outputting empty array.")
+        with open("4.json", "w", encoding="utf-8") as f:
+            json.dump([], f, indent=4, ensure_ascii=False)
+        return
+
+    # Process top 10 news items
+    target_news = valid_news[:10]
     master_output = []
 
     for idx, item in enumerate(target_news):
         title = item.get('title')
         content = item.get('content', '')
         
-        print(f"⏳ [{idx+1}/{len(target_news)}] Extracting Master Sections: {title[:45]}...")
+        print(f"⏳ [{idx+1}/{len(target_news)}] Sending to Gemini: {title[:45]}...")
         
         ai_data = process_news_with_ai(title, content)
         
@@ -145,19 +166,18 @@ def main():
                 "english_booster": ai_data.get("english_booster")
             }
             master_output.append(structured_item)
-            print("   ✅ Extracted successfully!")
+            print("   ✅ Extracted and parsed successfully!")
         else:
-            print("   ❌ Failed to process this item.")
+            print("   ❌ AI structure failed or skipped.")
 
-        # Cooldown delay for free tier compliance
         if idx < len(target_news) - 1:
             time.sleep(15)
 
-    # Save everything into the final Master file 4.json
+    # Save to Master File
     with open("4.json", "w", encoding="utf-8") as f:
         json.dump(master_output, f, indent=4, ensure_ascii=False)
 
-    print("\n🎉 Master Strike Success! '4.json' is fully generated with all sections.")
+    print(f"\n🎉 Process Complete! '4.json' generated with {len(master_output)} full items.")
 
 if __name__ == "__main__":
     main()
