@@ -36,8 +36,7 @@ def process_news_with_ai(title, raw_content):
        - antonyms: Exactly 3 standard antonyms in English.
     4. english_booster: Create an exam-style question based strictly on the sentence structure of the news:
        - error_spotting: Rephrase a sentence from the news to introduce a clear grammatical error (e.g., subject-verb disagreement). Provide the broken 'sentence', the 'error' word, the 'correction', and the grammar 'rule' violated.
-    5. STRICTLY output raw JSON only. Do NOT wrap the response in markdown code blocks like ```json ... 
-```. No meta-commentary or extra text allowed.
+    5. STRICTLY output raw JSON only. Do NOT wrap the response in markdown code blocks like ```json ... ```. No meta-commentary or extra text allowed.
 
     Desired JSON Schema Format:
     {{
@@ -83,12 +82,13 @@ def process_news_with_ai(title, raw_content):
             )
             
             clean_json_str = response.text.strip()
-            # LIVE DEBUG PRINT: AI ne kya return kiya wo terminal me dikhega
             print(f"      🔍 Raw AI Response Snippet: {clean_json_str[:150]}...")
             
-            if clean_json_str.startswith("```json"):
+            # 👉 FIX APPLIED HERE: Safely cleaning markdown blocks without breaking string literals 👈
+            if clean_json_str.startswith("```"):
+                clean_json_str = clean_json_str.split("json", 1)[-1] if "json" in clean_json_str else clean_json_str
                 clean_json_str = clean_json_str.replace("
-```json", "").replace("```", "").strip()
+```", "").strip()
                 
             return json.loads(clean_json_str)
 
@@ -122,13 +122,11 @@ def main():
 
     print(f"📊 Total raw articles found in 1.json: {len(raw_data)}")
 
-    # Strict content checking with explicit feedback
     valid_news = []
     for item in raw_data:
         title = item.get('title', '').strip()
         content = item.get('content', '').strip()
         
-        # Check condition manual tracing
         if title and len(content) > 10:
             valid_news.append(item)
         else:
@@ -142,7 +140,6 @@ def main():
             json.dump([], f, indent=4, ensure_ascii=False)
         return
 
-    # Process top 10 news items
     target_news = valid_news[:10]
     master_output = []
 
@@ -173,7 +170,6 @@ def main():
         if idx < len(target_news) - 1:
             time.sleep(15)
 
-    # Save to Master File
     with open("4.json", "w", encoding="utf-8") as f:
         json.dump(master_output, f, indent=4, ensure_ascii=False)
 
