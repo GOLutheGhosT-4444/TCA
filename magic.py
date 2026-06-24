@@ -2,7 +2,6 @@ import json
 import os
 import sys
 import time
-import base64
 from google import genai
 from google.genai import types
 from google.genai.errors import APIError
@@ -23,13 +22,13 @@ def auto_select_model(client_instance):
     try:
         available_models = list(client_instance.models.list())
         model_names = [m.name.replace('models/', '') for m in available_models if 'generateContent' in getattr(m, 'supported_generation_methods', ['generateContent'])]
-        
+
         priority_list = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
         for preferred in priority_list:
             if any(preferred in name for name in model_names):
                 print(f"   🎯 Auto-Selected Optimal Model: {preferred}")
                 return preferred
-                
+
         return model_names[0] if model_names else "gemini-2.0-flash"
     except Exception as e:
         print(f"   ⚠️ Auto-scan failed. Forcing safe default: gemini-2.0-flash")
@@ -38,38 +37,7 @@ def auto_select_model(client_instance):
 MODEL_NAME = auto_select_model(client)
 
 # =========================================================
-# 2. SMART ENCRYPTION ENGINE (ONLY ENCRYPTS VALUES)
-# =========================================================
-EMOJI_CIPHER = {
-    'A': '😀', 'B': '😃', 'C': '😄', 'D': '😁', 'E': '😆', 'F': '😅', 'G': '😂', 'H': '🤣',
-    'I': '😊', 'J': '😇', 'K': '🙂', 'L': '🙃', 'M': '😉', 'N': '😌', 'O': '😍', 'P': '🥰',
-    'Q': '😘', 'R': '😗', 'S': '😙', 'T': '😚', 'U': '😋', 'V': '😛', 'W': '😝', 'X': '😜',
-    'Y': '🤪', 'Z': '🤨', 'a': '🧐', 'b': '🤓', 'c': '😎', 'd': '🥸', 'e': '🤩', 'f': '🥳',
-    'g': '😏', 'h': '😒', 'i': '😞', 'j': '😔', 'k': '😟', 'l': '😕', 'm': '🙁', 'n': '☹️',
-    'o': '😣', 'p': '😖', 'q': '😫', 'r': '😩', 's': '🥺', 't': '😢', 'u': '😭', 'v': '😤',
-    'w': '😠', 'x': '😡', 'y': '🤬', 'z': '🤯', '0': '😳', '1': '🥵', '2': '🥶', '3': '😶',
-    '4': '🫥', '5': '😐', '6': '😑', '7': '😬', '8': '🙄', '9': '😯', '+': '😦', '/': '😧',
-    '=': '😮'
-}
-
-def encrypt_to_emojis(text_data):
-    b64_bytes = base64.b64encode(text_data.encode('utf-8'))
-    b64_string = b64_bytes.decode('utf-8')
-    return "".join(EMOJI_CIPHER.get(char, char) for char in b64_string)
-
-# 👉 Naya Function: Yeh sirf JSON ki values ko encrypt karega, keys aur structure ko nahi
-def encrypt_json_values(data):
-    if isinstance(data, dict):
-        return {k: encrypt_json_values(v) for k, v in data.items()}
-    elif isinstance(data, list):
-        return [encrypt_json_values(item) for item in data]
-    elif isinstance(data, str):
-        return encrypt_to_emojis(data)
-    else:
-        return data  # ID (numbers) waise hi rahenge
-
-# =========================================================
-# 3. MASTER AI EXTRACTOR
+# 2. MASTER AI EXTRACTOR
 # =========================================================
 def process_news_with_ai(title, raw_content):
     prompt = f"""
@@ -137,7 +105,7 @@ def process_news_with_ai(title, raw_content):
     return None
 
 # =========================================================
-# 4. MAIN PIPELINE
+# 3. MAIN PIPELINE
 # =========================================================
 def main():
     print(f"🚀 Initiating Pipeline using [{MODEL_NAME}]...")
@@ -149,7 +117,7 @@ def main():
         raw_data = json.load(f)
 
     valid_news = [item for item in raw_data if item.get('title') and len(item.get('content', '')) > 10][:10]
-    
+
     if not valid_news:
         sys.exit(1)
 
@@ -158,7 +126,7 @@ def main():
     for idx, item in enumerate(valid_news):
         print(f"⏳ [{idx+1}/{len(valid_news)}] Processing: {item.get('title')[:40]}...")
         ai_data = process_news_with_ai(item.get('title'), item.get('content', ''))
-        
+
         if ai_data:
             structured_item = {
                 "id": idx + 1,
@@ -176,15 +144,13 @@ def main():
     if not master_output:
         sys.exit(1)
 
-    print("🔒 Encrypting content values into custom emojis (Keeping JSON structure safe)...")
-    
-    # 👉 SMART ENCRYPTION: Sirf content encrypt hoga, structure nahi
-    encrypted_master_output = encrypt_json_values(master_output)
+    print("💾 Saving clean JSON data...")
 
+    # Data direct normal JSON format me save hoga
     with open("detailed_points.json", "w", encoding="utf-8") as f:
-        json.dump(encrypted_master_output, f, ensure_ascii=False, indent=4)
+        json.dump(master_output, f, ensure_ascii=False, indent=4)
 
-    print(f"\n🎉 SUCCESS! Structured Encrypted data saved to 'detailed_points.json'.")
+    print(f"\n🎉 SUCCESS! Plain text JSON data saved to 'detailed_points.json'.")
 
 if __name__ == "__main__":
     main()
