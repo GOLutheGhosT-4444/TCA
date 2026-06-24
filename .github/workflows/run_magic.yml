@@ -2,24 +2,26 @@ name: Master AI Data Processor (Magic Pipeline)
 
 on:
   workflow_run:
-    # Yeh line batati hai ki jaise hi 'Daily Current Affairs Scraper Pipeline' khatam hoga, ye trigger ho jaye
+    # 1. Automatic run after scraper completion
     workflows: ["Daily Current Affairs Scraper Pipeline"]
     types:
       - completed
 
   push:
+    # 2. Manual run on updating this yml or magic.py file directly
     paths:
       - '.github/workflows/run_magic.yml'
       - 'magic.py'
       
   workflow_dispatch:
+    # Custom button control
 
 jobs:
   run-magic-pipeline:
     runs-on: ubuntu-latest
     
-    # Sirf tabhi chalega agar scraper waala workflow SACH ME SUCCESSFUL hua ho
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # Conditional block: workflow run se tabhi chalega agar scraper success hua ho, push par hamesha chalega
+    if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     permissions:
       contents: write
@@ -28,19 +30,19 @@ jobs:
     - name: Checkout Repository Code
       uses: actions/checkout@v4
 
-    # 👉 FIX APPLIED HERE: Wait for exactly 10 seconds after scraper updates 👈
     - name: Wait for 10 Seconds Cooldown
       run: sleep 10
 
     - name: Set up Python Environment
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11' # Upgraded to 3.11 for 2026 Google Core compatibility
 
-    - name: Install Google AI Dependency
+    # 👉 FIX APPLIED HERE: Installed the new 2026 google-genai module 👈
+    - name: Install Google New AI Dependency
       run: |
         python -m pip install --upgrade pip
-        pip install google-generativeai
+        pip install google-genai
 
     # Execute Magic Engine using GitHub Secret Token
     - name: Execute Magic Engine (AI Processing)
