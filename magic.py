@@ -8,7 +8,7 @@ from google.genai import types
 from google.genai.errors import APIError
 
 # =========================================================
-# 1. INITIALIZATION & GITHUB SECRETS CHECK
+# 1. INITIALIZATION & SECRETS CHECK
 # =========================================================
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
@@ -17,8 +17,51 @@ if not API_KEY:
     sys.exit(1)
 
 client = genai.Client()
-MODEL_NAME = "gemini-1.5-flash"
 
+# =========================================================
+# 2. DYNAMIC MODEL AUTOPILOT (THE BRAIN)
+# =========================================================
+def auto_select_model(client_instance):
+    """API se active models ki list mangega aur sabse best select karega"""
+    print("🔍 Scanning Google AI Servers for available models...")
+    try:
+        # API se saare models ki list fetch karna
+        available_models = list(client_instance.models.list())
+        
+        # Un models ka naam nikalna jo text generation support karte hain
+        model_names = [m.name.replace('models/', '') for m in available_models if 'generateContent' in getattr(m, 'supported_generation_methods', ['generateContent'])]
+        
+        print(f"   📡 Found {len(model_names)} active models on your API key.")
+        
+        # Hamari Priority List (Sabse naya model pehle try karega)
+        priority_list = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.0-pro"]
+        
+        for preferred in priority_list:
+            if any(preferred in name for name in model_names):
+                print(f"   🎯 Auto-Selected Optimal Model: {preferred}")
+                return preferred
+                
+        # Agar priority list ka koi na mile, toh pehla "flash" model utha lo (kyunki wo fast aur free tier friendly hota hai)
+        for name in model_names:
+            if "flash" in name:
+                print(f"   🎯 Fallback to available flash model: {name}")
+                return name
+                
+        # Last resort: Jo bhi pehla model mile wo utha lo
+        print(f"   ⚠️ Preferred flash models not found. Using default: {model_names[0]}")
+        return model_names[0]
+        
+    except Exception as e:
+        # Agar scan fail ho jaye (due to API restrictions), toh default safe model return karo
+        print(f"   ⚠️ Auto-scan failed ({e}). Forcing safe default: gemini-2.0-flash")
+        return "gemini-2.0-flash"
+
+# Yahan script khud best model decide karegi
+MODEL_NAME = auto_select_model(client)
+
+# =========================================================
+# 3. ENCRYPTION ENGINE
+# =========================================================
 EMOJI_CIPHER = {
     'A': '😀', 'B': '😃', 'C': '😄', 'D': '😁', 'E': '😆', 'F': '😅', 'G': '😂', 'H': '🤣',
     'I': '😊', 'J': '😇', 'K': '🙂', 'L': '🙃', 'M': '😉', 'N': '😌', 'O': '😍', 'P': '🥰',
@@ -37,7 +80,7 @@ def encrypt_to_emojis(text_data):
     return "".join(EMOJI_CIPHER.get(char, char) for char in b64_string)
 
 # =========================================================
-# 2. MASTER ALL-IN-ONE PROMPT GENERATOR
+# 4. MASTER ALL-IN-ONE PROMPT
 # =========================================================
 def process_news_with_ai(title, raw_content):
     prompt = f"""
@@ -99,8 +142,6 @@ def process_news_with_ai(title, raw_content):
             )
             
             raw_output = response.text.strip()
-            
-            # 👉 100% FOOLPROOF CLEANER (No Syntax Errors Possible)
             raw_output = raw_output.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
             
             return json.loads(raw_output)
@@ -120,10 +161,10 @@ def process_news_with_ai(title, raw_content):
     return None
 
 # =========================================================
-# 3. MAIN PIPE SYSTEM
+# 5. MAIN PIPELINE
 # =========================================================
 def main():
-    print("🚀 Initiating Supercharged Master AI Pipeline...")
+    print(f"🚀 Initiating Supercharged AI Pipeline using [{MODEL_NAME}]...")
 
     if not os.path.exists("1.json"):
         print("❌ CRITICAL: '1.json' is missing.")
@@ -149,7 +190,7 @@ def main():
         title = item.get('title')
         content = item.get('content', '')
         
-        print(f"⏳ [{idx+1}/{len(target_news)}] AI Core Processing: {title[:40]}...")
+        print(f"⏳ [{idx+1}/{len(target_news)}] Processing: {title[:40]}...")
         ai_data = process_news_with_ai(title, content)
         
         if ai_data:
@@ -161,23 +202,24 @@ def main():
                 **ai_data
             }
             master_output.append(structured_item)
-            print("   ✅ Complete structural block compiled!")
+            print("   ✅ Compiled successfully!")
         else:
-            print("   ❌ Skip: AI processing failed for this entry.")
+            print("   ❌ Skip: Processing failed.")
 
         if idx < len(target_news) - 1:
             time.sleep(15)
 
     if len(master_output) == 0:
-        print("❌ CRITICAL: 0 blocks generated by AI. Execution stopped.")
+        print("❌ CRITICAL: 0 blocks generated. Execution stopped.")
         sys.exit(1)
 
     final_json_string = json.dumps(master_output, ensure_ascii=False, indent=4)
-    print("🔒 Encrypting database pack into emoji payloads...")
+    print("🔒 Encrypting database into custom emojis...")
     emoji_ciphertext = encrypt_to_emojis(final_json_string)
 
     secured_payload = {
         "status": "encrypted",
+        "model_used": MODEL_NAME, # Taki tumhe pata chale kaunsa model chala
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
         "payload": emoji_ciphertext
     }
@@ -185,7 +227,7 @@ def main():
     with open("detailed_points.json", "w", encoding="utf-8") as f:
         json.dump(secured_payload, f, ensure_ascii=False, indent=4)
 
-    print(f"\n🎉 SUCCESS! Secure encrypted data pack saved to 'detailed_points.json'.")
+    print(f"\n🎉 SUCCESS! Encrypted data saved. Master file generated.")
 
 if __name__ == "__main__":
     main()
