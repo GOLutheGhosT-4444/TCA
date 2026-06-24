@@ -19,50 +19,27 @@ client = genai.Client()
 MODEL_NAME = "gemini-1.5-flash"
 
 # =========================================================
-# 2. MASTER PROMPT DESIGN (STRICT JSON OUTPUT)
+# 2. MASTER PROMPT DESIGN (CLEAN NEWS + 5 BULLETS ONLY)
 # =========================================================
 def process_news_with_ai(title, raw_content):
     prompt = f"""
-    You are a strict, zero-hallucination data extraction engine for competitive exams (SSC, Banking, Military).
-    Analyze the provided input news title and raw text, then generate a JSON object matching the exact schema below.
-
+    You are a strict data extraction engine. Your job is to clean the raw news text and extract bullet points.
+    
     CRITICAL RULES:
-    1. detailed_news: Must be strictly ONE single continuous paragraph summarizing the core factual news. DO NOT add any extra word, assumption, or external fact not present in the input text.
-    2. bullets: Extract exactly 3 to 5 sharp, factual bullet points containing dates, names, or amounts from the text.
-    3. vocabularies: Identify any challenging/important vocabulary words present in the input text. For each word, provide:
-       - meaning_en: Simple English meaning.
-       - meaning_hi: Accurate Hindi meaning (in Devanagari script).
-       - synonyms: Exactly 3 standard synonyms in English.
-       - antonyms: Exactly 3 standard antonyms in English.
-    4. english_booster: Create an exam-style question based strictly on the sentence structure of the news:
-       - error_spotting: Rephrase a sentence from the news to introduce a clear grammatical error (e.g., subject-verb disagreement). Provide the broken 'sentence', the 'error' word, the 'correction', and the grammar 'rule' violated.
-    5. STRICTLY output raw JSON only.
+    1. cleaned_news: A single paragraph containing the cleaned, factual summary of the news. DO NOT add any extra information not present in the input.
+    2. bullets: Exactly 5 sharp, factual bullet points extracted from the text.
+    3. STRICTLY output raw JSON only, matching the exact schema below.
 
     Desired JSON Schema Format:
     {{
-        "detailed_news": "Single summarized paragraph string here",
+        "cleaned_news": "Single cleaned paragraph here",
         "bullets": [
-            "• Bullet point 1",
-            "• Bullet point 2",
-            "• Bullet point 3"
-        ],
-        "vocabularies": [
-            {{
-                "word": "TargetWord",
-                "meaning_en": "Meaning in English",
-                "meaning_hi": "Meaning in Hindi",
-                "synonyms": ["Syn1", "Syn2", "Syn3"],
-                "antonyms": ["Ant1", "Ant2", "Ant3"]
-            }}
-        ],
-        "english_booster": {{
-            "error_spotting": {{
-                "sentence": "The sentence with a grammatical error.",
-                "error": "wrong_word",
-                "correction": "right_word",
-                "rule": "Explanation of the grammar rule."
-            }}
-        }}
+            "• Point 1",
+            "• Point 2",
+            "• Point 3",
+            "• Point 4",
+            "• Point 5"
+        ]
     }}
 
     Input Title: {title}
@@ -81,7 +58,6 @@ def process_news_with_ai(title, raw_content):
                 ),
             )
             
-            # Direct loading without dangerous string manipulation blocks
             return json.loads(response.text.strip())
 
         except APIError as e:
@@ -99,7 +75,7 @@ def process_news_with_ai(title, raw_content):
 # 3. MAIN EXECUTION PIPELINE
 # =========================================================
 def main():
-    print("🚀 Starting Step 2: Master AI Extraction Engine...")
+    print("🚀 Starting Step 2: Clean News & Bullet Extractor...")
 
     if not os.path.exists("1.json"):
         print("❌ Error: '1.json' not found.")
@@ -126,7 +102,7 @@ def main():
 
     if not valid_news:
         print("⚠️ WARNING: No valid items to push to Gemini. Outputting empty array.")
-        with open("4.json", "w", encoding="utf-8") as f:
+        with open("detailed_points.json", "w", encoding="utf-8") as f:
             json.dump([], f, indent=4, ensure_ascii=False)
         return
 
@@ -137,7 +113,7 @@ def main():
         title = item.get('title')
         content = item.get('content', '')
         
-        print(f"⏳ [{idx+1}/{len(target_news)}] Sending to Gemini: {title[:45]}...")
+        print(f"⏳ [{idx+1}/{len(target_news)}] Cleaning & Extracting: {title[:45]}...")
         
         ai_data = process_news_with_ai(title, content)
         
@@ -147,23 +123,22 @@ def main():
                 "title": title,
                 "date": item.get('date', time.strftime("%Y-%m-%d")),
                 "category": item.get('category', 'General Current Affairs'),
-                "detailed_news": ai_data.get("detailed_news"),
-                "bullets": ai_data.get("bullets"),
-                "vocabularies": ai_data.get("vocabularies"),
-                "english_booster": ai_data.get("english_booster")
+                "cleaned_news": ai_data.get("cleaned_news"),
+                "bullets": ai_data.get("bullets")
             }
             master_output.append(structured_item)
-            print("   ✅ Extracted and parsed successfully!")
+            print("   ✅ Cleaned and bullet points extracted successfully!")
         else:
             print("   ❌ AI structure failed or skipped.")
 
         if idx < len(target_news) - 1:
             time.sleep(15)
 
-    with open("4.json", "w", encoding="utf-8") as f:
+    # Naya file name yahan set kar diya gaya hai
+    with open("detailed_points.json", "w", encoding="utf-8") as f:
         json.dump(master_output, f, indent=4, ensure_ascii=False)
 
-    print(f"\n🎉 Process Complete! '4.json' generated with {len(master_output)} full items.")
+    print(f"\n🎉 Process Complete! 'detailed_points.json' generated with {len(master_output)} items.")
 
 if __name__ == "__main__":
     main()
