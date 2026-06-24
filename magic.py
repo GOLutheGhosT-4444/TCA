@@ -36,7 +36,7 @@ def process_news_with_ai(title, raw_content):
        - antonyms: Exactly 3 standard antonyms in English.
     4. english_booster: Create an exam-style question based strictly on the sentence structure of the news:
        - error_spotting: Rephrase a sentence from the news to introduce a clear grammatical error (e.g., subject-verb disagreement). Provide the broken 'sentence', the 'error' word, the 'correction', and the grammar 'rule' violated.
-    5. STRICTLY output raw JSON only. Do NOT wrap the response in markdown code blocks like ```json ... ```. No meta-commentary or extra text allowed.
+    5. STRICTLY output raw JSON only.
 
     Desired JSON Schema Format:
     {{
@@ -81,16 +81,8 @@ def process_news_with_ai(title, raw_content):
                 ),
             )
             
-            clean_json_str = response.text.strip()
-            print(f"      🔍 Raw AI Response Snippet: {clean_json_str[:150]}...")
-            
-            # 👉 FIX APPLIED HERE: Safely cleaning markdown blocks without breaking string literals 👈
-            if clean_json_str.startswith("```"):
-                clean_json_str = clean_json_str.split("json", 1)[-1] if "json" in clean_json_str else clean_json_str
-                clean_json_str = clean_json_str.replace("
-```", "").strip()
-                
-            return json.loads(clean_json_str)
+            # Direct loading without dangerous string manipulation blocks
+            return json.loads(response.text.strip())
 
         except APIError as e:
             print(f"      ⚠️ API Error (Attempt {attempt+1}): {e}")
@@ -104,7 +96,7 @@ def process_news_with_ai(title, raw_content):
     return None
 
 # =========================================================
-# 3. MAIN EXECUTION PIPELINE (SUPER DEBUG MODE)
+# 3. MAIN EXECUTION PIPELINE
 # =========================================================
 def main():
     print("🚀 Starting Step 2: Master AI Extraction Engine...")
@@ -129,8 +121,6 @@ def main():
         
         if title and len(content) > 10:
             valid_news.append(item)
-        else:
-            print(f"   ⚠️ Item Skipped Prematurely -> Title: '{title[:30]}...', Content Length: {len(content)}")
 
     print(f"✅ Total valid articles left for AI after filtering: {len(valid_news)}")
 
