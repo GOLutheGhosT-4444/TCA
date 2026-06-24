@@ -1,1 +1,65 @@
+name: Master AI Data Processor (Magic Pipeline)
 
+on:
+  workflow_run:
+    # Yeh line batati hai ki jaise hi 'Daily Current Affairs Scraper Pipeline' khatam hoga, ye trigger ho jaye
+    workflows: ["Daily Current Affairs Scraper Pipeline"]
+    types:
+      - completed
+
+  push:
+    paths:
+      - '.github/workflows/run_magic.yml'
+      - 'magic.py'
+      
+  workflow_dispatch:
+
+jobs:
+  run-magic-pipeline:
+    runs-on: ubuntu-latest
+    
+    # Sirf tabhi chalega agar scraper waala workflow SACH ME SUCCESSFUL hua ho
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout Repository Code
+      uses: actions/checkout@v4
+
+    # 👉 FIX APPLIED HERE: Wait for exactly 10 seconds after scraper updates 👈
+    - name: Wait for 10 Seconds Cooldown
+      run: sleep 10
+
+    - name: Set up Python Environment
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Google AI Dependency
+      run: |
+        python -m pip install --upgrade pip
+        pip install google-generativeai
+
+    # Execute Magic Engine using GitHub Secret Token
+    - name: Execute Magic Engine (AI Processing)
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      run: |
+        python magic.py
+
+    - name: Commit and Push Master Output 4.json
+      run: |
+        git config --global user.name "Ghost-Bot"
+        git config --global user.email "bot@ghoststudio.internal"
+        
+        git add 4.json
+        
+        if git diff --staged --quiet; then
+          echo "⚠️ No changes detected or processing failed. Skipping push."
+        else
+          git commit -m "🤖 Automate: Master Data Pack 4.json Generated"
+          git push origin main
+          echo "✅ Success: 4.json synchronized with repository."
+        fi
