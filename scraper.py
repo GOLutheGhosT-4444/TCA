@@ -12,26 +12,26 @@ EXAM_KEYWORDS = [
     "World Bank", "IMF", "RBI", "SEBI", "Repo Rate", "Inflation", "UPI", "NPCI",
     "Fund", "Allocated", "Budget", "Penalty", "Fined", "Acquires", "Merger", 
     "Stake", "Dividend", "Economy", "GDP Growth",
-    
+
     # 🏅 Ranks, Reports & Indices
     "Ranked", "Index", "Rank", "Report", "Position", "Topped",
-    
+
     # 👔 Appointments, Resignations & Obituaries
     "Appointed as", "Takes charge as", "Selected as", "Elected", "Takes over", 
     "Resigns", "Steps down", "Passes away",
-    
+
     # 🤝 Agreements & Partnerships
     "MoU", "Bilateral Agreement", "Signs", "Pact", "Agrees", "Partnered", 
     "Collaborates", "Deal",
-    
+
     # 🚀 Defence, Space & Science
     "DRDO", "ISRO", "Military Exercise", "Naval Exercise", "Air Force", "Missile", 
     "Spacecraft", "Satellite", "Defence Ministry", "Inducted", "Commissioned",
-    
+
     # 🏛️ National, Schemes & Judiciary
     "Yojana", "Scheme", "Cabinet Approval", "Supreme Court", "Election Commission", 
     "Launched", "Unveiled", "Inaugurated", "Approved", "Sanctioned", "Portal", "Initiative",
-    
+
     # 🏆 Awards & Sports
     "Nobel Prize", "Sahitya Akademi", "Awarded", "Honoured", "Host", "Venue", 
     "Medal", "Tournament", "Championship", "Cup", "Trophy", "Grand Slam", "Olympics"
@@ -139,8 +139,6 @@ def run_scraper():
         with open("1.json", "w", encoding="utf-8") as f:
             json.dump(new_articles, f, indent=4, ensure_ascii=False)
         print(f"✅ {len(new_articles)} naye articles '1.json' me overwrite ho gaye hain.")
-
-        # 👉 REMOVED: 'all.txt' append logic completely deleted 👈
 
         save_history(scraped_history)
         print("\n🎉 Success! Scraper ka kaam complete ho gaya.")
