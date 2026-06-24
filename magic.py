@@ -2,26 +2,28 @@ import json
 import os
 import sys
 import time
-import google.generativeai as genai
+from google import genai
+from google.genai import types
+from google.genai.errors import APIError
 
 # =========================================================
-# 1. INITIALIZATION & GITHUB SECRETS CHECK
+# 1. INITIALIZATION & NEW SDK AUTHENTICATION
 # =========================================================
+# New Google GenAI SDK automatically looks for GEMINI_API_KEY env variable
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
 if not API_KEY:
     print("❌ CRITICAL ERROR: GEMINI_API_KEY environment variable missing in GitHub Secrets.")
     sys.exit(1)
 
-genai.configure(api_key=API_KEY)
-MODEL_NAME = "models/gemini-1.5-flash"
+# Initialize new client standard for 2026
+client = genai.Client()
+MODEL_NAME = "gemini-1.5-flash"
 
 # =========================================================
 # 2. MASTER PROMPT DESIGN (STRICT JSON OUTPUT)
 # =========================================================
 def process_news_with_ai(title, raw_content):
-    model = genai.GenerativeModel(MODEL_NAME)
-    
     # Ultra-Strict Master Prompt engineering for multiple sections
     prompt = f"""
     You are a strict, zero-hallucination data extraction engine for competitive exams (SSC, Banking, Military).
@@ -73,36 +75,40 @@ def process_news_with_ai(title, raw_content):
     max_retries = 3
     for attempt in range(max_retries):
         try:
-            response = model.generate_content(
-                prompt,
-                generation_config=genai.GenerationConfig(
-                    temperature=0.0, # Complete factual response, zero imagination
-                    response_mime_type="application/json" # Forces Gemini to return pure valid JSON
-                )
+            # Using the updated 2026 genai structure
+            response = client.models.generate_content(
+                model=MODEL_NAME,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    temperature=0.0,  # Zero creativity
+                    response_mime_type="application/json"  # Enforce structural JSON output
+                ),
             )
             
-            # Clean accidental markdown if any
             clean_json_str = response.text.strip()
             if clean_json_str.startswith("```json"):
                 clean_json_str = clean_json_str.replace("```json", "").replace("```", "").strip()
                 
             return json.loads(clean_json_str)
 
-        except Exception as e:
-            if "429" in str(e) or "quota" in str(e).lower():
+        except APIError as e:
+            if e.code == 429:
                 print(f"   ⚠️ Rate Limit Hit! Sleeping 60s before retry {attempt+1}/{max_retries}...")
                 time.sleep(60)
                 continue
             else:
                 print(f"   ❌ Generation Error: {e}")
                 return None
+        except Exception as e:
+            print(f"   ❌ Unexpected Parsing Error: {e}")
+            return None
     return None
 
 # =========================================================
 # 3. MAIN EXECUTION PIPELINE
 # =========================================================
 def main():
-    print("🚀 Starting Step 2: Master AI Extraction Engine...")
+    print("🚀 Starting Step 2: Master AI Extraction Engine (New SDK)...")
 
     if not os.path.exists("1.json"):
         print("❌ Error: '1.json' not found. Run scraper.py first.")
@@ -115,7 +121,7 @@ def main():
             print("❌ Error: '1.json' is corrupted.")
             return
 
-    # Take top 10 fresh news to stay within optimum processing bandwidth
+    # Take top 10 fresh news items
     target_news = raw_data[:10]
     master_output = []
 
@@ -143,7 +149,7 @@ def main():
         else:
             print("   ❌ Failed to process this item.")
 
-        # 15 seconds cool-down delay for Gemini free tier compliance
+        # Cooldown delay for free tier compliance
         if idx < len(target_news) - 1:
             time.sleep(15)
 
