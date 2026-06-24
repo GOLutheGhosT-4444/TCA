@@ -18,49 +18,27 @@ if not API_KEY:
 
 client = genai.Client()
 
-# =========================================================
-# 2. DYNAMIC MODEL AUTOPILOT (THE BRAIN)
-# =========================================================
 def auto_select_model(client_instance):
-    """API se active models ki list mangega aur sabse best select karega"""
     print("🔍 Scanning Google AI Servers for available models...")
     try:
-        # API se saare models ki list fetch karna
         available_models = list(client_instance.models.list())
-        
-        # Un models ka naam nikalna jo text generation support karte hain
         model_names = [m.name.replace('models/', '') for m in available_models if 'generateContent' in getattr(m, 'supported_generation_methods', ['generateContent'])]
         
-        print(f"   📡 Found {len(model_names)} active models on your API key.")
-        
-        # Hamari Priority List (Sabse naya model pehle try karega)
-        priority_list = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.0-pro"]
-        
+        priority_list = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash"]
         for preferred in priority_list:
             if any(preferred in name for name in model_names):
                 print(f"   🎯 Auto-Selected Optimal Model: {preferred}")
                 return preferred
                 
-        # Agar priority list ka koi na mile, toh pehla "flash" model utha lo (kyunki wo fast aur free tier friendly hota hai)
-        for name in model_names:
-            if "flash" in name:
-                print(f"   🎯 Fallback to available flash model: {name}")
-                return name
-                
-        # Last resort: Jo bhi pehla model mile wo utha lo
-        print(f"   ⚠️ Preferred flash models not found. Using default: {model_names[0]}")
-        return model_names[0]
-        
+        return model_names[0] if model_names else "gemini-2.0-flash"
     except Exception as e:
-        # Agar scan fail ho jaye (due to API restrictions), toh default safe model return karo
-        print(f"   ⚠️ Auto-scan failed ({e}). Forcing safe default: gemini-2.0-flash")
+        print(f"   ⚠️ Auto-scan failed. Forcing safe default: gemini-2.0-flash")
         return "gemini-2.0-flash"
 
-# Yahan script khud best model decide karegi
 MODEL_NAME = auto_select_model(client)
 
 # =========================================================
-# 3. ENCRYPTION ENGINE
+# 2. SMART ENCRYPTION ENGINE (ONLY ENCRYPTS VALUES)
 # =========================================================
 EMOJI_CIPHER = {
     'A': '😀', 'B': '😃', 'C': '😄', 'D': '😁', 'E': '😆', 'F': '😅', 'G': '😂', 'H': '🤣',
@@ -79,8 +57,19 @@ def encrypt_to_emojis(text_data):
     b64_string = b64_bytes.decode('utf-8')
     return "".join(EMOJI_CIPHER.get(char, char) for char in b64_string)
 
+# 👉 Naya Function: Yeh sirf JSON ki values ko encrypt karega, keys aur structure ko nahi
+def encrypt_json_values(data):
+    if isinstance(data, dict):
+        return {k: encrypt_json_values(v) for k, v in data.items()}
+    elif isinstance(data, list):
+        return [encrypt_json_values(item) for item in data]
+    elif isinstance(data, str):
+        return encrypt_to_emojis(data)
+    else:
+        return data  # ID (numbers) waise hi rahenge
+
 # =========================================================
-# 4. MASTER ALL-IN-ONE PROMPT
+# 3. MASTER AI EXTRACTOR
 # =========================================================
 def process_news_with_ai(title, raw_content):
     prompt = f"""
@@ -91,7 +80,7 @@ def process_news_with_ai(title, raw_content):
     {{
         "cleaned_news": "Exactly ONE continuous paragraph summarizing the core news using ONLY input words.",
         "bullets": [
-            "• Factual point 1 with dates/names/amounts",
+            "• Factual point 1",
             "• Factual point 2",
             "• Factual point 3",
             "• Factual point 4",
@@ -129,105 +118,73 @@ def process_news_with_ai(title, raw_content):
     Input Raw Text: {raw_content[:10000]}
     """
 
-    max_retries = 3
-    for attempt in range(max_retries):
+    for attempt in range(3):
         try:
             response = client.models.generate_content(
                 model=MODEL_NAME,
                 contents=prompt,
-                config=types.GenerateContentConfig(
-                    temperature=0.0,
-                    response_mime_type="application/json"
-                ),
+                config=types.GenerateContentConfig(temperature=0.0, response_mime_type="application/json"),
             )
-            
-            raw_output = response.text.strip()
-            raw_output = raw_output.removeprefix("```json").removeprefix("```").removesuffix("```").strip()
-            
+            raw_output = response.text.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
             return json.loads(raw_output)
-
         except APIError as e:
-            print(f"      ⚠️ API Error (Attempt {attempt+1}): {e}")
             if e.code == 429:
                 time.sleep(60)
                 continue
             return None
-        except json.JSONDecodeError as e:
-            print(f"      ⚠️ JSON Parsing Error: {e}")
-            return None
-        except Exception as e:
-            print(f"      ⚠️ Unexpected Error: {e}")
+        except Exception:
             return None
     return None
 
 # =========================================================
-# 5. MAIN PIPELINE
+# 4. MAIN PIPELINE
 # =========================================================
 def main():
-    print(f"🚀 Initiating Supercharged AI Pipeline using [{MODEL_NAME}]...")
+    print(f"🚀 Initiating Pipeline using [{MODEL_NAME}]...")
 
     if not os.path.exists("1.json"):
-        print("❌ CRITICAL: '1.json' is missing.")
         sys.exit(1)
 
     with open("1.json", "r", encoding="utf-8") as f:
-        try:
-            raw_data = json.load(f)
-        except json.JSONDecodeError:
-            print("❌ CRITICAL: '1.json' data is corrupted.")
-            sys.exit(1)
+        raw_data = json.load(f)
 
-    valid_news = [item for item in raw_data if item.get('title') and len(item.get('content', '')) > 10]
+    valid_news = [item for item in raw_data if item.get('title') and len(item.get('content', '')) > 10][:10]
     
     if not valid_news:
-        print("❌ CRITICAL: No valid data found inside 1.json.")
         sys.exit(1)
 
-    target_news = valid_news[:10]
     master_output = []
 
-    for idx, item in enumerate(target_news):
-        title = item.get('title')
-        content = item.get('content', '')
-        
-        print(f"⏳ [{idx+1}/{len(target_news)}] Processing: {title[:40]}...")
-        ai_data = process_news_with_ai(title, content)
+    for idx, item in enumerate(valid_news):
+        print(f"⏳ [{idx+1}/{len(valid_news)}] Processing: {item.get('title')[:40]}...")
+        ai_data = process_news_with_ai(item.get('title'), item.get('content', ''))
         
         if ai_data:
             structured_item = {
                 "id": idx + 1,
-                "title": title,
+                "title": item.get('title'),
                 "date": item.get('date', time.strftime("%Y-%m-%d")),
                 "category": item.get('category', 'General Current Affairs'),
                 **ai_data
             }
             master_output.append(structured_item)
-            print("   ✅ Compiled successfully!")
-        else:
-            print("   ❌ Skip: Processing failed.")
+            print("   ✅ Compiled!")
 
-        if idx < len(target_news) - 1:
+        if idx < len(valid_news) - 1:
             time.sleep(15)
 
-    if len(master_output) == 0:
-        print("❌ CRITICAL: 0 blocks generated. Execution stopped.")
+    if not master_output:
         sys.exit(1)
 
-    final_json_string = json.dumps(master_output, ensure_ascii=False, indent=4)
-    print("🔒 Encrypting database into custom emojis...")
-    emoji_ciphertext = encrypt_to_emojis(final_json_string)
-
-    secured_payload = {
-        "status": "encrypted",
-        "model_used": MODEL_NAME, # Taki tumhe pata chale kaunsa model chala
-        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
-        "payload": emoji_ciphertext
-    }
+    print("🔒 Encrypting content values into custom emojis (Keeping JSON structure safe)...")
+    
+    # 👉 SMART ENCRYPTION: Sirf content encrypt hoga, structure nahi
+    encrypted_master_output = encrypt_json_values(master_output)
 
     with open("detailed_points.json", "w", encoding="utf-8") as f:
-        json.dump(secured_payload, f, ensure_ascii=False, indent=4)
+        json.dump(encrypted_master_output, f, ensure_ascii=False, indent=4)
 
-    print(f"\n🎉 SUCCESS! Encrypted data saved. Master file generated.")
+    print(f"\n🎉 SUCCESS! Structured Encrypted data saved to 'detailed_points.json'.")
 
 if __name__ == "__main__":
     main()
