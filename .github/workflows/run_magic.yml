@@ -2,25 +2,23 @@ name: Master AI Data Processor (Magic Pipeline)
 
 on:
   workflow_run:
-    # 1. Automatic run after scraper completion
+    # Trigger after scraper finishes
     workflows: ["Daily Current Affairs Scraper Pipeline"]
     types:
       - completed
 
   push:
-    # 2. Manual run on updating this yml or magic.py file directly
     paths:
       - '.github/workflows/run_magic.yml'
       - 'magic.py'
       
   workflow_dispatch:
-    # Custom button control
 
 jobs:
   run-magic-pipeline:
     runs-on: ubuntu-latest
     
-    # Conditional block: workflow run se tabhi chalega agar scraper success hua ho, push par hamesha chalega
+    # Run if triggered manually, pushed, or if scraper succeeded
     if: ${{ github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     permissions:
@@ -36,9 +34,8 @@ jobs:
     - name: Set up Python Environment
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11' # Upgraded to 3.11 for 2026 Google Core compatibility
+        python-version: '3.11'
 
-    # 👉 FIX APPLIED HERE: Installed the new 2026 google-genai module 👈
     - name: Install Google New AI Dependency
       run: |
         python -m pip install --upgrade pip
@@ -51,17 +48,18 @@ jobs:
       run: |
         python magic.py
 
-    - name: Commit and Push Master Output 4.json
+    # 👉 100% FIXED: Yahan detailed_points.json push hogi 👈
+    - name: Commit and Push Master Output
       run: |
         git config --global user.name "Ghost-Bot"
         git config --global user.email "bot@ghoststudio.internal"
         
-        git add 4.json
+        git add detailed_points.json
         
         if git diff --staged --quiet; then
           echo "⚠️ No changes detected or processing failed. Skipping push."
         else
-          git commit -m "🤖 Automate: Master Data Pack 4.json Generated"
+          git commit -m "🤖 Automate: Encrypted Data detailed_points.json Generated"
           git push origin main
-          echo "✅ Success: 4.json synchronized with repository."
+          echo "✅ Success: detailed_points.json synchronized with repository."
         fi
