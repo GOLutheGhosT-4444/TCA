@@ -10,126 +10,148 @@ import google.generativeai as genai
 API_KEY = os.environ.get("GEMINI_API_KEY")
 
 if not API_KEY:
-    print("❌ CRITICAL ERROR: GEMINI_API_KEY environment variable missing.")
-    print("Ensure it is set in GitHub Repository Secrets with exact capitalization.")
+    print("❌ CRITICAL ERROR: GEMINI_API_KEY environment variable missing in GitHub Secrets.")
     sys.exit(1)
 
 genai.configure(api_key=API_KEY)
-
-def get_flash_model():
-    """Returns the name of the preferred fast free model"""
-    return "models/gemini-1.5-flash"
+MODEL_NAME = "models/gemini-1.5-flash"
 
 # =========================================================
-# 2. ULTRA-STRICT AI CLEANING FUNCTION (ZERO HALLUCINATION)
+# 2. MASTER PROMPT DESIGN (STRICT JSON OUTPUT)
 # =========================================================
-def clean_news_with_ai(model_name, title, raw_content):
-    """Gemini ko strictly filter karne par majboor karta hai without adding extra words"""
-    model = genai.GenerativeModel(model_name)
+def process_news_with_ai(title, raw_content):
+    model = genai.GenerativeModel(MODEL_NAME)
     
-    # Ultra-Strict Prompt Engineering to lock Gemini's imagination
+    # Ultra-Strict Master Prompt engineering for multiple sections
     prompt = f"""
-    You are a strict factual data filter for competitive exams. Your job is to clean the raw scraped text.
+    You are a strict, zero-hallucination data extraction engine for competitive exams (SSC, Banking, Military).
+    Analyze the provided input news title and raw text, then generate a JSON object matching the exact schema below.
 
     CRITICAL RULES:
-    1. Output strictly a SINGLE continuous paragraph containing only the core factual news.
-    2. DO NOT add any extra line, greeting, introduction, conclusion, or pleasantry (e.g., Do not say "Here is the cleaned news:").
-    3. DO NOT generate multiple paragraphs. Combine the facts into exactly ONE paragraph.
-    4. ZERO HALLUCINATION: Use ONLY the information and words present in the raw input text. Do NOT add any external facts, explanations, or assumptions.
-    5. Ensure numbers, amounts, dates, acronyms, and names are preserved exactly as they are in the input.
+    1. detailed_news: Must be strictly ONE single continuous paragraph summarizing the core factual news. DO NOT add any extra word, assumption, or external fact not present in the input text.
+    2. bullets: Extract exactly 3 to 5 sharp, factual bullet points containing dates, names, or amounts from the text.
+    3. vocabularies: Identify any challenging/important vocabulary words present in the input text. For each word, provide:
+       - meaning_en: Simple English meaning.
+       - meaning_hi: Accurate Hindi meaning (in Devanagari script).
+       - synonyms: Exactly 3 standard synonyms in English.
+       - antonyms: Exactly 3 standard antonyms in English.
+    4. english_booster: Create an exam-style question based strictly on the sentence structure of the news:
+       - error_spotting: Rephrase a sentence from the news to introduce a clear grammatical error (e.g., subject-verb disagreement). Provide the broken 'sentence', the 'error' word, the 'correction', and the grammar 'rule' violated.
+    5. STRICTLY output raw JSON only. Do NOT wrap the response in markdown code blocks like ```json ... ```. No meta-commentary or extra text allowed.
 
-    Input News Title: {title}
-    Input Raw Text: {raw_content[:12000]}  # Token boundary safety
+    Desired JSON Schema Format:
+    {{
+        "detailed_news": "Single summarized paragraph string here",
+        "bullets": [
+            "• Bullet point 1",
+            "• Bullet point 2",
+            "• Bullet point 3"
+        ],
+        "vocabularies": [
+            {{
+                "word": "TargetWord",
+                "meaning_en": "Meaning in English",
+                "meaning_hi": "Meaning in Hindi",
+                "synonyms": ["Syn1", "Syn2", "Syn3"],
+                "antonyms": ["Ant1", "Ant2", "Ant3"]
+            }}
+        ],
+        "english_booster": {{
+            "error_spotting": {{
+                "sentence": "The sentence with a grammatical error.",
+                "error": "wrong_word",
+                "correction": "right_word",
+                "rule": "Explanation of the grammar rule."
+            }}
+        }}
+    }}
+
+    Input Title: {title}
+    Input Raw Text: {raw_content[:10000]}
     """
-    
+
     max_retries = 3
     for attempt in range(max_retries):
         try:
             response = model.generate_content(
                 prompt,
                 generation_config=genai.GenerationConfig(
-                    temperature=0.0, # Zero creativity for absolute factual mapping
+                    temperature=0.0, # Complete factual response, zero imagination
+                    response_mime_type="application/json" # Forces Gemini to return pure valid JSON
                 )
             )
             
-            cleaned_text = response.text.strip()
-            
-            # Post-processing safety block to remove any accidental AI meta-commentary
-            if cleaned_text.startswith("Here is") or cleaned_text.startswith("Cleaned text:"):
-                cleaned_text = cleaned_text.split("\n", 1)[-1].strip()
+            # Clean accidental markdown if any
+            clean_json_str = response.text.strip()
+            if clean_json_str.startswith("```json"):
+                clean_json_str = clean_json_str.replace("```json", "").replace("```", "").strip()
                 
-            return cleaned_text
+            return json.loads(clean_json_str)
 
         except Exception as e:
-            error_str = str(e).lower()
-            if "429" in error_str or "quota" in error_str:
+            if "429" in str(e) or "quota" in str(e).lower():
                 print(f"   ⚠️ Rate Limit Hit! Sleeping 60s before retry {attempt+1}/{max_retries}...")
                 time.sleep(60)
                 continue
             else:
-                return f"API ERROR: {str(e)[:60]}"
-
-    return "Processing Failed due to Quota Exceeded"
+                print(f"   ❌ Generation Error: {e}")
+                return None
+    return None
 
 # =========================================================
-# 3. CORE PROCESSING PIPELINE
+# 3. MAIN EXECUTION PIPELINE
 # =========================================================
 def main():
-    print("🚀 Step 2: AI Strict Data Cleaning Engine Initiated...")
+    print("🚀 Starting Step 2: Master AI Extraction Engine...")
 
     if not os.path.exists("1.json"):
-        print("❌ Error: '1.json' raw data file not found in the root directory.")
+        print("❌ Error: '1.json' not found. Run scraper.py first.")
         return
 
     with open("1.json", "r", encoding="utf-8") as f:
         try:
             raw_data = json.load(f)
         except json.JSONDecodeError:
-            print("❌ Error: '1.json' is corrupted or invalid JSON format.")
+            print("❌ Error: '1.json' is corrupted.")
             return
 
-    # Filter out items that don't have titles or are too small
-    valid_news = [item for item in raw_data if item.get('title') and len(item.get('content', '')) > 40]
-    
-    # Process latest 10 news items to stay under optimal free-tier limits
-    target_news = valid_news[:10]
-    processed_news = []
-
-    model_name = get_flash_model()
-    print(f"🤖 Connected via GitHub Secret Token to: {model_name}\n")
+    # Take top 10 fresh news to stay within optimum processing bandwidth
+    target_news = raw_data[:10]
+    master_output = []
 
     for idx, item in enumerate(target_news):
         title = item.get('title')
-        raw_content = item.get('content', '')
+        content = item.get('content', '')
         
-        print(f"⏳ [{idx+1}/{len(target_news)}] Cleaning Factual Data: {title[:45]}...")
+        print(f"⏳ [{idx+1}/{len(target_news)}] Extracting Master Sections: {title[:45]}...")
         
-        # Fire strict request
-        clean_paragraph = clean_news_with_ai(model_name, title, raw_content)
+        ai_data = process_news_with_ai(title, content)
         
-        if "API ERROR" not in clean_paragraph and "Failed" not in clean_paragraph:
-            # Structuring the exact output format
-            cleaned_item = {
+        if ai_data:
+            structured_item = {
                 "id": idx + 1,
                 "title": title,
                 "date": item.get('date', time.strftime("%Y-%m-%d")),
                 "category": item.get('category', 'General Current Affairs'),
-                "content": clean_paragraph # Exactly 1 strict factual paragraph
+                "detailed_news": ai_data.get("detailed_news"),
+                "bullets": ai_data.get("bullets"),
+                "vocabularies": ai_data.get("vocabularies"),
+                "english_booster": ai_data.get("english_booster")
             }
-            processed_news.append(cleaned_item)
-            print(f"   ✅ Success")
+            master_output.append(structured_item)
+            print("   ✅ Extracted successfully!")
         else:
-            print(f"   ❌ Failed (Reason: {clean_paragraph})")
+            print("   ❌ Failed to process this item.")
 
-        # Free tier 15s cooling delay to respect Gemini's RPM limit
+        # 15 seconds cool-down delay for Gemini free tier compliance
         if idx < len(target_news) - 1:
             time.sleep(15)
 
-    # Output saved directly to detailed_news.json as requested
-    with open("detailed_news.json", "w", encoding="utf-8") as f:
-        json.dump(processed_news, f, indent=4, ensure_ascii=False)
+    # Save everything into the final Master file 4.json
+    with open("4.json", "w", encoding="utf-8") as f:
+        json.dump(master_output, f, indent=4, ensure_ascii=False)
 
-    print(f"\n🎉 Done! 100% original factual summaries saved to 'detailed_news.json'.")
+    print("\n🎉 Master Strike Success! '4.json' is fully generated with all sections.")
 
 if __name__ == "__main__":
     main()
