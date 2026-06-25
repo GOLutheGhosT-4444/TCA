@@ -1,237 +1,409 @@
 [
     {
         "id": 1,
-        "title": "Office-zombie alert: How to be job-ready after watching late-night FIFA World Cup 2026 matches? I asked ChatGPT",
-        "date": "2026-06-24",
+        "title": "IAEA chief says Iran's nuclear sites will be inspected, Tehran bars access until final deal",
+        "date": "2026-06-25",
         "category": "General Current Affairs",
-        "cleaned_news": "The FIFA World Cup 2026 is gradually moving into the knockout zone, with matches scheduled for North American time zones leading to late-night and early-morning games that disrupt the work-life balance for Indian viewers, making it nearly impossible to stay sane in the office the next day, prompting a need for a practical, India-specific survival strategy for people who still have jobs, meetings and responsibilities to enjoy late-night FIFA World Cup matches without becoming useless at work.",
+        "cleaned_news": "The head of the United Nations’ nuclear watchdog said Wednesday that inspectors will eventually gain access to Iran’s uranium enrichment facilities, a critical component of the interim agreement reached between the United States and Iran, but Iran quickly challenged this assertion, stating that any discussion of inspections at enrichment facilities would only occur as part of a final, comprehensive accord, underscoring ongoing tensions surrounding implementation of the agreement.",
         "bullets": [
-            "• The FIFA World Cup 2026 Round of 32 starts on 29 June.",
-            "• FIFA World Cup matches are scheduled for North American time zones, leading to late-night and early-morning games that disrupt the work-life balance for Indian viewers.",
-            "• To balance enjoying late-night FIFA matches with work, prioritize one premium match on office days and utilize weekends for extended viewership.",
-            "• Hydrating early, opting for lighter dinners, avoiding caffeine post-6 PM, and limiting screen time after matches can help mitigate sleep debt.",
-            "• A 3:30 AM kick-off before an office day calls for highlights, which is strategy, not failure."
+            "• The head of the United Nations’ nuclear watchdog, IAEA Director General Rafael Mariano Grossi, expressed confidence that inspections would proceed.",
+            "• Iran's Deputy Foreign Minister Kazem Gharibabadi said any discussion of inspections at enrichment facilities would only occur as part of a final, comprehensive accord.",
+            "• The dispute centers on Iran’s enrichment facilities, which have remained inaccessible to IAEA inspectors since the 12-day war between Israel and Iran in 2025.",
+            "• A central provision of the interim US-Iran deal requires Tehran to reduce the enrichment level of its uranium stockpile through a process known as downblending.",
+            "• In exchange, Washington has agreed to ease sanctions targeting Iran’s oil sector while both sides work toward a broader agreement within a 60-day negotiating window."
         ],
         "vocabularies": [
             {
-                "word": "pathetic",
-                "meaning_en": "Arousing pity, especially through vulnerability or sadness; miserably inadequate.",
-                "meaning_hi": "दयनीय, करुणाजनक, बहुत बुरा",
+                "word": "interim",
+                "meaning_en": "Temporary or provisional; in the meantime.",
+                "meaning_hi": "अंतरिम; अस्थायी; बीच का",
                 "synonyms": [
-                    "pitiful",
-                    "miserable",
-                    "lamentable"
+                    "Provisional",
+                    "Temporary",
+                    "Transitional"
                 ],
                 "antonyms": [
-                    "admirable",
-                    "excellent",
-                    "commendable"
-                ]
-            },
-            {
-                "word": "mitigate",
-                "meaning_en": "Make less severe, serious, or painful.",
-                "meaning_hi": "कम करना, शांत करना, हल्का करना",
-                "synonyms": [
-                    "alleviate",
-                    "lessen",
-                    "reduce"
-                ],
-                "antonyms": [
-                    "intensify",
-                    "worsen",
-                    "aggravate"
-                ]
-            },
-            {
-                "word": "disrupt",
-                "meaning_en": "Interrupt (an event, activity, or process) by causing a disturbance or problem.",
-                "meaning_hi": "बाधित करना, भंग करना, अस्त-व्यस्त करना",
-                "synonyms": [
-                    "disturb",
-                    "interrupt",
-                    "upset"
-                ],
-                "antonyms": [
-                    "organize",
-                    "arrange",
-                    "facilitate"
-                ]
-            },
-            {
-                "word": "urgency",
-                "meaning_en": "Importance requiring swift action.",
-                "meaning_hi": "तात्कालिकता, शीघ्रता, अनिवार्यता",
-                "synonyms": [
-                    "imperative",
-                    "necessity",
-                    "exigency"
-                ],
-                "antonyms": [
-                    "unimportance",
-                    "triviality",
-                    "leisure"
-                ]
-            },
-            {
-                "word": "align",
-                "meaning_en": "Place or arrange (things) in a straight line; give support to (a person, organization, or cause).",
-                "meaning_hi": "संरेखित करना, एक सीध में लाना, मेल खाना",
-                "synonyms": [
-                    "coordinate",
-                    "harmonize",
-                    "correspond"
-                ],
-                "antonyms": [
-                    "misalign",
-                    "diverge",
-                    "conflict"
+                    "Permanent",
+                    "Final",
+                    "Lasting"
                 ]
             }
         ],
         "english_booster": {
             "error_spotting": {
-                "sentence": "Those late-night matches makes it nearly impossible to stay sane in the office the next day.",
-                "error": "makes",
-                "correction": "make",
-                "rule": "Subject-verb agreement. The plural subject 'matches' requires a plural verb 'make', not the singular 'makes'."
+                "sentence": "The head of the United Nations’ nuclear watchdog say Wednesday that inspectors will eventually gain access to Iran’s uranium enrichment facilities.",
+                "error": "say",
+                "correction": "said",
+                "rule": "The past tense form of the verb 'say' is 'said'. In reported speech or when referring to a past action, the verb must agree with the past tense context."
             },
             "fill_in_the_blanks": {
-                "sentence": "Hydrating early and opting for lighter dinners can also help _____ sleep debt.",
+                "sentence": "The arrangement is widely viewed as a _____ confidence-building measure intended to prevent renewed escalation following the 2025 conflict.",
                 "options": [
-                    "increase",
-                    "mitigate",
-                    "exacerbate",
-                    "aggravate"
+                    "permanent",
+                    "temporary",
+                    "critical",
+                    "essential"
                 ],
-                "answer": "mitigate"
+                "answer": "temporary"
             },
             "rearrangement": {
                 "jumbled_parts": [
-                    "A. The FIFA World Cup 2026 is gradually moving into the knockout zone.",
-                    "B. The Round of 32 starts on 29 June.",
-                    "C. Those late-night matches make it nearly impossible to stay sane in the office the next day.",
-                    "D. Let’s admit, the timings are pathetic for viewers in India."
+                    "that the nuclear activities",
+                    "The accord says explicitly",
+                    "with regards to the nuclear material facilities",
+                    "will be supervised by the IAEA"
                 ],
-                "correct_order": "ABDC"
+                "correct_order": "BADC"
+            }
+        }
+    },
+    {
+        "id": 2,
+        "title": "Airfares may climb up to 25% with doubling of fuel costs in 2026: Report",
+        "date": "2026-06-25",
+        "category": "General Current Affairs",
+        "cleaned_news": "Geopolitical disruption and refinery constraints are impacting jet fuel supply, which raises airline costs and could translate into higher crack spreads, thereby pushing airfares, according to a McKinsey report, noting jet fuel demand is set to rise ahead of the summer travel season amid depleted inventories, and fuel prices have surged mainly due to crude oil trends while supply has been constrained, leading to a potential doubling of fuel costs that could lead to fare increases of roughly 20 to 25 percent.",
+        "bullets": [
+            "• Geopolitical disruption and refinery constraints are impacting jet fuel supply, raising airline costs.",
+            "• Jet fuel demand is set to rise ahead of the summer travel season amid depleted inventories.",
+            "• Fuel prices have surged mainly due to crude oil trends, while supply has been constrained by reduced refinery production.",
+            "• The jet fuel \"crack spread\" measures the difference in price between crude oil and refined fuel products.",
+            "• A doubling of fuel costs could lead to fare increases of roughly 20 to 25 percent, as about 30 percent of an airline ticket price goes toward fuel."
+        ],
+        "vocabularies": [
+            {
+                "word": "constrained",
+                "meaning_en": "restricted or limited in scope or freedom.",
+                "meaning_hi": "सीमित, बाधित, प्रतिबंधित",
+                "synonyms": [
+                    "restricted",
+                    "limited",
+                    "curbed"
+                ],
+                "antonyms": [
+                    "unrestricted",
+                    "free",
+                    "unhindered"
+                ]
+            }
+        ],
+        "english_booster": {
+            "error_spotting": {
+                "sentence": "Geopolitical disruption and refinery constraints is impacting jet fuel supply.",
+                "error": "is",
+                "correction": "are",
+                "rule": "Subject-verb agreement: When a sentence has a compound subject joined by 'and', the verb should be plural."
+            },
+            "fill_in_the_blanks": {
+                "sentence": "Jet fuel demand is set to rise ahead of the summer travel season amid depleted _____.",
+                "options": [
+                    "inventories",
+                    "reserves",
+                    "stocks",
+                    "supplies"
+                ],
+                "answer": "inventories"
+            },
+            "rearrangement": {
+                "jumbled_parts": [
+                    "A: Geopolitical disruption and refinery constraints",
+                    "B: thereby pushing airfares, according to a McKinsey report.",
+                    "C: are impacting jet fuel supply, which raises airline costs",
+                    "D: and could translate into higher crack spreads,"
+                ],
+                "correct_order": "ACDB"
+            }
+        }
+    },
+    {
+        "id": 3,
+        "title": "Piyush Goyal to visit UK from 25-27 June to finalize trade deal",
+        "date": "2026-06-25",
+        "category": "General Current Affairs",
+        "cleaned_news": "Commerce and industry minister Piyush Goyal will visit the United Kingdom from 25-27 June to review preparations for the India-UK Comprehensive Economic and Trade Agreement (CETA) and the Double Contribution Convention (DCC) and to further strengthen economic ties. During his visit, Goyal will hold bilateral meetings, participate in government-to-business engagements, and address the India Global Forum, focusing on opportunities arising from CETA. The discussions will align regulatory roadmaps, streamline customs coordination, and finalize administrative mechanisms for CETA's tariff liberalization and DCC's operational roadmap, supporting the objective of expanding bilateral trade to $120 billion by 2030.",
+        "bullets": [
+            "• Commerce and industry minister Piyush Goyal will visit the United Kingdom from 25-27 June.",
+            "• The visit precedes the coming into force of the India-UK Comprehensive Economic and Trade Agreement (CETA) and the Double Contribution Convention (DCC) on 15 July.",
+            "• Goyal will hold a bilateral meeting with Peter Kyle, the UK’s secretary of state for business and trade, to review preparations for the two agreements.",
+            "• Discussions will focus on aligning regulatory roadmaps, streamlining cross-border customs coordination, and finalising administrative mechanisms for CETA and DCC.",
+            "• The visit supports the shared objective of expanding bilateral trade between India and the UK to $120 billion by 2030."
+        ],
+        "vocabularies": [
+            {
+                "word": "bilateral",
+                "meaning_en": "involving two parties, especially countries.",
+                "meaning_hi": "द्विपक्षीय",
+                "synonyms": [
+                    "two-sided",
+                    "reciprocal",
+                    "mutual"
+                ],
+                "antonyms": [
+                    "unilateral",
+                    "multilateral",
+                    "one-sided"
+                ]
+            },
+            {
+                "word": "streamlining",
+                "meaning_en": "making a process or system more efficient by simplifying it.",
+                "meaning_hi": "सुव्यवस्थित करना, सरल बनाना",
+                "synonyms": [
+                    "simplify",
+                    "rationalize",
+                    "optimize"
+                ],
+                "antonyms": [
+                    "complicate",
+                    "hinder",
+                    "obstruct"
+                ]
+            },
+            {
+                "word": "commitments",
+                "meaning_en": "a pledge or undertaking to do something.",
+                "meaning_hi": "प्रतिबद्धता, वादा",
+                "synonyms": [
+                    "promise",
+                    "obligation",
+                    "pledge"
+                ],
+                "antonyms": [
+                    "disloyalty",
+                    "irresponsibility",
+                    "betrayal"
+                ]
+            },
+            {
+                "word": "underscores",
+                "meaning_en": "emphasizes the importance of something.",
+                "meaning_hi": "रेखांकित करना, महत्व देना",
+                "synonyms": [
+                    "highlight",
+                    "emphasize",
+                    "stress"
+                ],
+                "antonyms": [
+                    "downplay",
+                    "minimize",
+                    "disregard"
+                ]
+            }
+        ],
+        "english_booster": {
+            "error_spotting": {
+                "sentence": "Commerce and industry minister Piyush Goyal will visit the United Kingdom from 25-27 June, before the India-UK Comprehensive Economic and Trade Agreement (CETA) and the Double Contribution Convention (DCC) comes into force on 15 July.",
+                "error": "comes",
+                "correction": "come",
+                "rule": "Subject-verb agreement: When two or more subjects are joined by 'and', the verb should be plural. Here, 'CETA and DCC' is a plural subject, requiring the plural verb 'come'."
+            },
+            "fill_in_the_blanks": {
+                "sentence": "The ministry said the visit underscores India's commitment to engaging with global businesses and investors and supports the shared _____ of expanding bilateral trade between India and the UK to $120 billion by 2030.",
+                "options": [
+                    "goal",
+                    "target",
+                    "objective",
+                    "aim"
+                ],
+                "answer": "objective"
+            },
+            "rearrangement": {
+                "jumbled_parts": [
+                    "A: During his visit, Goyal will hold a bilateral meeting",
+                    "B: with Peter Kyle, the UK’s secretary of state for business and trade,",
+                    "C: to review preparations for the two agreements",
+                    "D: and to further strengthen economic ties between India and the UK."
+                ],
+                "correct_order": "ABCD"
             }
         }
     },
     {
         "id": 4,
-        "title": "U.S. presses Meta to agree to AI reviews as security concerns rise: Report",
-        "date": "2026-06-24",
+        "title": "RBI says no to special exposure relaxations for state NBFCs",
+        "date": "2026-06-25",
         "category": "General Current Affairs",
-        "cleaned_news": "The Trump administration is pressing Meta to submit its AI models for voluntary review, which would allow the government to evaluate their abilities and vulnerabilities, as the Facebook parent is the only major U.S. developer of AI technology that has not reached an agreement to voluntarily share its models with the federal government for review, while concern is growing in Washington over the national security risks posed by powerful AI systems.",
+        "cleaned_news": "The RBI said that while a case-by-case exemption was permitted earlier, most of such exemptions had a sunset clause which has since expired, and the exposure of these entities have been brought within limits. The RBI has, however, allowed any residual breaches under the revised concentration norms to be grandfathered, and such exposures can be offset by using eligible credit risk transfer instruments such as state government guarantees. The RBI has allowed government-owned NBFCs to breach their single and group exposure limits provided these are run off until maturity and that net incremental exposure remains unchanged. In amended directions, the RBI also increased the large exposure limit for infrastructure finance companies (IFCs) in the upper layer to 45% from 35% of the capital base.",
         "bullets": [
-            "• The Trump administration is pressing Meta to submit its AI models for voluntary review.",
-            "• Meta is the only major U.S. developer of AI technology that has not reached an agreement to voluntarily share its models with the federal government for review.",
-            "• OpenAI, Anthropic, Google DeepMind, Microsoft, and xAI have already agreed or are working with the U.S. government for AI model evaluations.",
-            "• Earlier this month, the U.S. government ordered Anthropic to suspend access to its most advanced AI models for foreign nationals, citing national security concerns.",
-            "• U.S. officials are aiming to identify threats ranging from cyberattacks to military misuse before AI tools are widely deployed."
+            "• Earlier, case-by-case exemptions were permitted for state NBFCs.",
+            "• Most of these exemptions had a sunset clause which has since expired.",
+            "• The exposure of these entities has been brought within limits by the RBI.",
+            "• Any residual breaches under the revised concentration norms are allowed to be grandfathered.",
+            "• The RBI increased the large exposure limit for infrastructure finance companies (IFCs) in the upper layer to 45% from 35% of the capital base."
         ],
         "vocabularies": [
             {
-                "word": "vulnerabilities",
-                "meaning_en": "weaknesses or susceptibilities to harm or attack.",
-                "meaning_hi": "कमजोरियाँ, भेद्यताएँ",
+                "word": "permitted",
+                "meaning_en": "allowed; given permission for",
+                "meaning_hi": "अनुमति दी गई",
                 "synonyms": [
-                    "weaknesses",
-                    "susceptibilities",
-                    "frailties"
+                    "allowed",
+                    "authorized",
+                    "sanctioned"
                 ],
                 "antonyms": [
-                    "strengths",
-                    "immunities",
-                    "resilience"
+                    "forbidden",
+                    "prohibited",
+                    "disallowed"
                 ]
             },
             {
-                "word": "confidential",
-                "meaning_en": "intended to be kept secret.",
-                "meaning_hi": "गोपनीय, रहस्यमय",
+                "word": "expired",
+                "meaning_en": "came to an end; no longer valid",
+                "meaning_hi": "समाप्त हो गया",
                 "synonyms": [
-                    "secret",
-                    "private",
-                    "classified"
+                    "ended",
+                    "lapsed",
+                    "terminated"
                 ],
                 "antonyms": [
-                    "public",
-                    "open",
-                    "disclosed"
-                ]
-            },
-            {
-                "word": "oversight",
-                "meaning_en": "the action of overseeing something; supervision.",
-                "meaning_hi": "निगरानी, पर्यवेक्षण",
-                "synonyms": [
-                    "supervision",
-                    "monitoring",
-                    "scrutiny"
-                ],
-                "antonyms": [
-                    "neglect",
-                    "disregard",
-                    "inattention"
-                ]
-            },
-            {
-                "word": "frontier",
-                "meaning_en": "the extreme limit of understanding or achievement in a particular area.",
-                "meaning_hi": "सीमांत, अग्रिम",
-                "synonyms": [
-                    "cutting-edge",
-                    "advanced",
-                    "leading"
-                ],
-                "antonyms": [
-                    "conventional",
-                    "traditional",
-                    "old-fashioned"
-                ]
-            },
-            {
-                "word": "deployed",
-                "meaning_en": "brought into effective action; utilized.",
-                "meaning_hi": "तैनात किया गया, उपयोग किया गया",
-                "synonyms": [
-                    "utilized",
-                    "implemented",
-                    "launched"
-                ],
-                "antonyms": [
-                    "withdrawn",
-                    "recalled",
-                    "stored"
+                    "started",
+                    "began",
+                    "commenced"
                 ]
             }
         ],
         "english_booster": {
             "error_spotting": {
-                "sentence": "The Trump administration is pressing Meta to submit its AI models for voluntary review, which would allows the government to evaluate their abilities and vulnerabilities.",
-                "error": "allows",
-                "correction": "allow",
-                "rule": "After modal verbs like 'would', the base form of the verb (infinitive without 'to') must be used. 'Allows' is a third-person singular present tense form, which is incorrect here."
+                "sentence": "The exposure of these entities have been brought within limits.",
+                "error": "have",
+                "correction": "has",
+                "rule": "The subject 'exposure' is singular, so the singular verb 'has' should be used instead of the plural 'have' to maintain subject-verb agreement."
             },
             "fill_in_the_blanks": {
-                "sentence": "The Trump administration is pressing Meta to submit its AI models for voluntary _____, which would allow the government to evaluate their abilities and vulnerabilities.",
+                "sentence": "The RBI has, however, allowed any residual breaches under the revised concentration norms to be _____.",
                 "options": [
-                    "inspection",
-                    "review",
-                    "scrutiny",
-                    "assessment"
+                    "permitted",
+                    "expired",
+                    "grandfathered",
+                    "increased"
                 ],
-                "answer": "review"
+                "answer": "grandfathered"
             },
             "rearrangement": {
                 "jumbled_parts": [
-                    "The Facebook parent, which launched the Muse Spark AI model in April,",
-                    "that has not reached an agreement to voluntarily share its models",
-                    "is the only major U.S. developer of AI technology",
-                    "with the federal government for review, according to the report."
+                    "The RBI has allowed government-owned NBFCs",
+                    "to breach their single and group exposure limits",
+                    "provided these are run off until maturity",
+                    "and that net incremental exposure remains unchanged."
                 ],
-                "correct_order": "ACBD"
+                "correct_order": "ABCD"
+            }
+        }
+    },
+    {
+        "id": 6,
+        "title": "RBI in wait-and-watch mode, no certainty on rate hike: Governor Sanjay Malhotra",
+        "date": "2026-06-25",
+        "category": "General Current Affairs",
+        "cleaned_news": "Malhotra said that if it was so certain that we are going to hike rates in the coming months, then we would have changed the stance from neutral to restrictive, but we did not do that precisely because there is elevated uncertainty. He cautioned that the global environment and the progress of monsoon remain uncertain, and assured that the RBI is keeping an eye on these factors, being in a wait-and-watch mode. The RBI will keep an eye on both crude oil prices and the progress of monsoon to take a view on inflation, as there could be risks on both inflation and growth. In the monetary policy committee (MPC) meeting on June 5, the RBI unanimously decided to keep the repo rate unchanged at 5.25%, while acknowledging that the risks of higher inflation had amplified, and decided to maintain a neutral policy stance. The RBI has revised its consumer price inflation forecast upwards citing higher global crude oil prices and their knock-on effects on fuel, industrial inputs and raw materials, and also revised growth forecast for this fiscal downwards.",
+        "bullets": [
+            "• Governor Malhotra stated that the RBI is in a wait-and-watch mode due to elevated uncertainty regarding the global environment and monsoon progress.",
+            "• The RBI did not change its policy stance from neutral to restrictive, indicating no certainty on a rate hike in the coming months.",
+            "• The Monetary Policy Committee (MPC) unanimously decided to keep the repo rate unchanged at 5.25% in its June 5 meeting.",
+            "• The RBI revised its consumer price inflation forecast upwards, expecting it to increase to 5.1% in 2026-27 from 4.6% forecast earlier.",
+            "• India's retail inflation accelerated to 3.93% year-on-year in May from 3.48% in April, remaining below the RBI's medium-term target of 4%."
+        ],
+        "vocabularies": [
+            {
+                "word": "elevated",
+                "meaning_en": "raised or increased to a higher level",
+                "meaning_hi": "बढ़ा हुआ, उन्नत",
+                "synonyms": [
+                    "increased",
+                    "heightened",
+                    "raised"
+                ],
+                "antonyms": [
+                    "lowered",
+                    "reduced",
+                    "decreased"
+                ]
+            }
+        ],
+        "english_booster": {
+            "error_spotting": {
+                "sentence": "The RBI will keep an eye on both crude oil prices and the progress of monsoon to takes a view on inflation.",
+                "error": "takes",
+                "correction": "take",
+                "rule": "The infinitive form of a verb (base form) must follow 'to' when expressing purpose or intention."
+            },
+            "fill_in_the_blanks": {
+                "sentence": "We are in a wait-and-watch mode because the monsoon has been weak so far but, just to _____, we have enough food stocks.",
+                "options": [
+                    "clarify",
+                    "explain",
+                    "state",
+                    "confirm"
+                ],
+                "answer": "clarify"
+            },
+            "rearrangement": {
+                "jumbled_parts": [
+                    "The RBI has revised its consumer price inflation forecast upwards",
+                    "citing higher global crude oil prices",
+                    "and their knock-on effects on fuel,",
+                    "industrial inputs and raw materials."
+                ],
+                "correct_order": "ABCD"
+            }
+        }
+    },
+    {
+        "id": 7,
+        "title": "S&amp;P cuts India's FY27 growth forecast to 6.6%, sees inflation at 5.1%",
+        "date": "2026-06-25",
+        "category": "General Current Affairs",
+        "cleaned_news": "S&P cuts India's FY27 growth forecast to 6.6%, sees inflation at 5.1%. The US-headquartered ratings agency expects gross domestic product (GDP) growth to recover to 7.2% in 2027-28. Retail inflation in India is forecast to rise to 5.1% in 2026-27 as manufacturers pass on higher energy costs to consumers, alongside recent increases in administered prices. S&P's baseline forecast assumes that disruptions in the Strait of Hormuz will gradually ease, but a prolonged energy disruption would be unfavourable for the Asia-Pacific region, pushing inflation up and weighing on economic growth.",
+        "bullets": [
+            "• S&P cuts India's FY27 growth forecast to 6.6%.",
+            "• S&P forecasts India's retail inflation to rise to 5.1% in 2026-27.",
+            "• The US-headquartered ratings agency expects India's GDP growth to recover to 7.2% in 2027-28.",
+            "• S&P's baseline forecast assumes disruptions in the Strait of Hormuz will gradually ease.",
+            "• The ratings agency expects a policy rate hike to 5.5% in the second half of this fiscal."
+        ],
+        "vocabularies": [
+            {
+                "word": "elevated",
+                "meaning_en": "raised to a higher position or level",
+                "meaning_hi": "ऊंचा किया हुआ, बढ़ा हुआ",
+                "synonyms": [
+                    "raised",
+                    "increased",
+                    "heightened"
+                ],
+                "antonyms": [
+                    "lowered",
+                    "reduced",
+                    "decreased"
+                ]
+            }
+        ],
+        "english_booster": {
+            "error_spotting": {
+                "sentence": "The US-headquartered ratings agency expect gross domestic product (GDP) growth to recover to 7.2% in 2027-28.",
+                "error": "expect",
+                "correction": "expects",
+                "rule": "Subject-verb agreement: A singular subject ('agency') requires a singular verb ('expects')."
+            },
+            "fill_in_the_blanks": {
+                "sentence": "Retail inflation in India is forecast to rise to 5.1% in 2026-27 as manufacturers pass on higher energy costs to consumers, alongside recent increases in _____ prices such as those for petrol, diesel and cooking gas.",
+                "options": [
+                    "administered",
+                    "managed",
+                    "controlled",
+                    "regulated"
+                ],
+                "answer": "administered"
+            },
+            "rearrangement": {
+                "jumbled_parts": [
+                    "Higher energy costs would increase the prices",
+                    "of goods and services, pushing inflation",
+                    "in China, India and Japan up 0.5-0.6 percentage points",
+                    "in the third quarter of 2026."
+                ],
+                "correct_order": "ABCD"
             }
         }
     }
