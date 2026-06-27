@@ -1,411 +1,57 @@
 [
     {
-        "id": 1,
-        "title": "Passport a valid document for SIR identification, say Election Commission officials",
-        "date": "2026-06-26",
-        "category": "General Current Affairs",
-        "cleaned_news": "Election Commission of India (ECI) officials today said Indian passports continue to be among the 12 valid supporting documents that voters can use to establish eligibility for inclusion on the electoral rolls under the ongoing special intensive revision (SIR). Officials were responding to a query after a controversy erupted when the Ministry of External Affairs (MEA) clarified that a passport is not proof of citizenship under the Passport Act of 1967. The response comes amid controversy sparked by the MEA's recent clarification that a passport is a travel document, not proof of citizenship, and should not be regarded as conclusive proof of citizenship.",
-        "bullets": [
-            "• Election Commission of India (ECI) officials confirmed that Indian passports remain among the 12 valid documents for voter identification in electoral rolls.",
-            "• The Ministry of External Affairs (MEA) clarified that a passport is not proof of citizenship under the Passport Act of 1967.",
-            "• An Indian passport is primarily a travel document and should not be considered conclusive proof of citizenship.",
-            "• Citizenship is governed by the Citizenship Act, while passports are issued under the Passports Act, highlighting different legal frameworks.",
-            "• Former Foreign Secretary Nirupama Menon Rao stated that a passport is powerful evidence of citizenship in everyday life but not the final legal authority in citizenship disputes."
-        ],
-        "vocabularies": [
-            {
-                "word": "conclusive",
-                "meaning_en": "serving to prove a case; decisive or convincing.",
-                "meaning_hi": "निर्णायक, अंतिम, निश्चित",
-                "synonyms": [
-                    "decisive",
-                    "definitive",
-                    "final"
-                ],
-                "antonyms": [
-                    "inconclusive",
-                    "uncertain",
-                    "ambiguous"
-                ]
-            },
-            {
-                "word": "reiterated",
-                "meaning_en": "said again or repeated something already said, typically for emphasis or clarity.",
-                "meaning_hi": "दोहराया, पुनरावृत्ति की",
-                "synonyms": [
-                    "repeated",
-                    "restated",
-                    "emphasized"
-                ],
-                "antonyms": [
-                    "retracted",
-                    "unsaid",
-                    "denied"
-                ]
-            },
-            {
-                "word": "erupted",
-                "meaning_en": "(of a problem, conflict, or emotion) suddenly break out or intensify.",
-                "meaning_hi": "भड़क उठा, फूट पड़ा",
-                "synonyms": [
-                    "flared",
-                    "burst",
-                    "broke out"
-                ],
-                "antonyms": [
-                    "subsided",
-                    "calmed",
-                    "ceased"
-                ]
-            },
-            {
-                "word": "governed",
-                "meaning_en": "conducted the policy, actions, and affairs of (a state, organization, or people).",
-                "meaning_hi": "शासित, नियंत्रित",
-                "synonyms": [
-                    "controlled",
-                    "regulated",
-                    "managed"
-                ],
-                "antonyms": [
-                    "unregulated",
-                    "uncontrolled",
-                    "unmanaged"
-                ]
-            },
-            {
-                "word": "indicative",
-                "meaning_en": "serving as a sign or indication of something.",
-                "meaning_hi": "सूचक, संकेतक",
-                "synonyms": [
-                    "suggestive",
-                    "symptomatic",
-                    "characteristic"
-                ],
-                "antonyms": [
-                    "misleading",
-                    "unrevealing",
-                    "uninformative"
-                ]
-            }
-        ],
-        "english_booster": {
-            "error_spotting": {
-                "sentence": "Officials was responding to a query after a controversy erupted.",
-                "error": "was",
-                "correction": "were",
-                "rule": "Subject-verb agreement: The plural subject 'Officials' requires the plural verb 'were'."
-            },
-            "fill_in_the_blanks": {
-                "sentence": "Indian citizenship can be established through documentation related to birth, descent, registration, or naturalization, but not through a passport _____, which is not considered final proof in legal disputes.",
-                "options": [
-                    "alone",
-                    "only",
-                    "solely",
-                    "merely"
-                ],
-                "answer": "alone"
-            },
-            "rearrangement": {
-                "jumbled_parts": [
-                    "A passport is issued",
-                    "because the Government",
-                    "has satisfied itself",
-                    "that you are an Indian citizen"
-                ],
-                "correct_order": "ABCD"
-            }
-        }
-    },
-    {
-        "id": 2,
-        "title": "US-Iran war news LIVE: Washington mulls relocating bases amid Gulf military's posture review, says report",
-        "date": "2026-06-26",
-        "category": "General Current Affairs",
-        "cleaned_news": "President Donald Trump said the United States plans to use Iranian assets frozen under US sanctions to purchase wheat, soybeans and corn from American farmers, while Iran's Parliamentary Speaker MB Ghalibaf called these claims false, stating Iran harvests mistrust. US Secretary of State Marco Rubio said Washington remains committed to negotiating an end to the conflict with Iran but will not accept any agreement that allows Tehran to impose fees on ships transiting the Strait of Hormuz, a stance backed by Oman during Gulf Cooperation Council talks, even as a vessel was struck by an unidentified projectile in the Strait, renewing concerns about safe passage. Meanwhile, the United States is reviewing its military deployment in the Middle East, considering shifting bases farther west, and US-mediated negotiations between Israel and Lebanon have been extended amidst a fragile ceasefire, with the UN atomic watchdog chief emphasizing a strong verification system for Iran's nuclear program.",
-        "bullets": [
-            "• President Donald Trump announced the US plans to use frozen Iranian assets to purchase American wheat, soybeans, and corn.",
-            "• Iran-backed Hezbollah alleged a \"flagrant\" ceasefire breach by Israel, claiming a drone strike killed three civilians in southern Lebanon.",
-            "• US Secretary of State Marco Rubio stated Washington would not accept any agreement allowing Iran to impose fees on ships transiting the Strait of Hormuz.",
-            "• A cargo vessel was struck by an unidentified projectile in the Strait of Hormuz, damaging its bridge and renewing concerns about safe passage.",
-            "• The United States is reviewing its military deployment in the Middle East, considering relocating bases farther west to avoid Iranian missiles and drones."
-        ],
-        "vocabularies": [
-            {
-                "word": "mulls",
-                "meaning_en": "thinks about (a matter) deeply and at length.",
-                "meaning_hi": "विचार करना, सोचना",
-                "synonyms": [
-                    "considers",
-                    "ponders",
-                    "deliberates"
-                ],
-                "antonyms": [
-                    "ignores",
-                    "disregards",
-                    "dismisses"
-                ]
-            },
-            {
-                "word": "flagrant",
-                "meaning_en": "(of an action) conspicuously or obviously offensive.",
-                "meaning_hi": "घोर, स्पष्ट, जघन्य",
-                "synonyms": [
-                    "blatant",
-                    "glaring",
-                    "egregious"
-                ],
-                "antonyms": [
-                    "minor",
-                    "subtle",
-                    "concealed"
-                ]
-            },
-            {
-                "word": "semantics",
-                "meaning_en": "the meaning of a word, phrase, or text.",
-                "meaning_hi": "शब्दार्थ, अर्थविज्ञान",
-                "synonyms": [
-                    "meaning",
-                    "interpretation",
-                    "connotation"
-                ],
-                "antonyms": [
-                    "insignificance",
-                    "irrelevance",
-                    "triviality"
-                ]
-            },
-            {
-                "word": "disrupted",
-                "meaning_en": "interrupt (an event, activity, or process) by causing a disturbance or problem.",
-                "meaning_hi": "बाधित करना, भंग करना",
-                "synonyms": [
-                    "interrupted",
-                    "disturbed",
-                    "hindered"
-                ],
-                "antonyms": [
-                    "facilitated",
-                    "organized",
-                    "continued"
-                ]
-            },
-            {
-                "word": "fragile",
-                "meaning_en": "(of a situation) uncertain or precarious; easily broken or damaged.",
-                "meaning_hi": "नाजुक, भंगुर, कमजोर",
-                "synonyms": [
-                    "delicate",
-                    "vulnerable",
-                    "precarious"
-                ],
-                "antonyms": [
-                    "robust",
-                    "strong",
-                    "stable"
-                ]
-            }
-        ],
-        "english_booster": {
-            "error_spotting": {
-                "sentence": "The United States is reviewing its military deployment in the Middle East, the Wall Street Journal reported, citing satellite images that suggests significantly greater damage at a major naval base in Bahrain.",
-                "error": "suggests",
-                "correction": "suggest",
-                "rule": "Subject-verb agreement. The relative pronoun \"that\" refers to \"satellite images\" (plural), so the verb must be plural."
-            },
-            "fill_in_the_blanks": {
-                "sentence": "Yesterday, the United Nations _____ its evacuation of ships through the Strait of Hormuz after the British military reported that a vessel was struck by a projectile off the coast of Oman.",
-                "options": [
-                    "suspended",
-                    "continued",
-                    "initiated",
-                    "resumed"
-                ],
-                "answer": "suspended"
-            },
-            "rearrangement": {
-                "jumbled_parts": [
-                    "but will not accept any agreement",
-                    "transiting the Strait of Hormuz.",
-                    "Washington remains committed to negotiating an end to the conflict with Iran",
-                    "that allows Tehran to impose fees on ships"
-                ],
-                "correct_order": "CADB"
-            }
-        }
-    },
-    {
         "id": 3,
-        "title": "US Supreme Court clears Trump immigration moves on temporary protected status and asylum policy — Explained",
-        "date": "2026-06-26",
+        "title": "Israel, Lebanon reach framework deal; US mediator says agreement is 'first step' toward peace, releases text",
+        "date": "2026-06-27",
         "category": "General Current Affairs",
-        "cleaned_news": "The US Supreme Court has handed the Trump administration two major immigration wins, allowing it to end protections for hundreds of thousands of migrants and potentially revive restrictive asylum policies at the US-Mexico border. The 6–3 rulings strengthen executive authority over immigration while sharply limiting judicial oversight, affecting Temporary Protected Status for migrants from Haiti and Syria and permitting revival of a controversial “metering” asylum policy.",
+        "cleaned_news": "US Secretary of State Marco Rubio announced on Friday (local time) that the United States had brokered a framework agreement between Israel and Lebanon designed to promote “lasting peace and security”. Under the agreement, a ceasefire would take effect if Hezbollah halts all attacks and withdraws from southern Lebanon. The agreement states that this process depends on “the verified disarmament of non-state armed groups and dismantlement of associated infrastructure, enabling the [Israeli army] to progressively redeploy out of the Lebanese territory”. Rubio described the agreement as the first and most difficult step toward that goal, acknowledging that much work remained while stressing its importance.",
         "bullets": [
-            "• The US Supreme Court allowed the administration to end Temporary Protected Status (TPS) for migrants from Haiti and Syria.",
-            "• The rulings strengthen executive authority over immigration while sharply limiting judicial oversight.",
-            "• The Court permitted revival of a controversial “metering” asylum policy that limits how many migrants can apply at border crossings each day.",
-            "• Temporary Protected Status (TPS) is a humanitarian immigration program created by Congress in 1990, allowing people to stay temporarily if their home country is unsafe.",
-            "• The liberal justices dissented, arguing that courts do have authority to ensure proper legal procedure and that evidence suggests the TPS rollback may have been influenced by racial animus."
+            "• US Secretary of State Marco Rubio announced a framework agreement between Israel and Lebanon.",
+            "• The agreement was designed to promote “lasting peace and security” between the two nations.",
+            "• A ceasefire would take effect if Hezbollah halts all attacks and withdraws from southern Lebanon.",
+            "• The Lebanese military will restore effective sovereign authority over all Lebanese territory under the agreement.",
+            "• The process depends on the verified disarmament of non-state armed groups and dismantlement of associated infrastructure."
         ],
         "vocabularies": [
             {
-                "word": "restrictive",
-                "meaning_en": "limiting freedom of action or choice.",
-                "meaning_hi": "प्रतिबंधात्मक, सीमित करने वाला",
+                "word": "brokered",
+                "meaning_en": "Arranged or negotiated (a deal or agreement).",
+                "meaning_hi": "मध्यस्थता की, दलाली की",
                 "synonyms": [
-                    "limiting",
-                    "confining",
-                    "prohibitive"
+                    "Negotiated",
+                    "Mediated",
+                    "Arbitrated"
                 ],
                 "antonyms": [
-                    "liberal",
-                    "permissive",
-                    "open"
-                ]
-            },
-            {
-                "word": "dissent",
-                "meaning_en": "hold or express opinions that are at variance with those previously, officially, or popularly expressed.",
-                "meaning_hi": "असहमति, विरोध",
-                "synonyms": [
-                    "disagreement",
-                    "opposition",
-                    "protest"
-                ],
-                "antonyms": [
-                    "agreement",
-                    "assent",
-                    "concurrence"
-                ]
-            },
-            {
-                "word": "undermines",
-                "meaning_en": "erode the base or foundation of; lessen the effectiveness, power, or ability of, especially gradually or insidiously.",
-                "meaning_hi": "कमजोर करना, नींव खोदना",
-                "synonyms": [
-                    "weaken",
-                    "impair",
-                    "sabotage"
-                ],
-                "antonyms": [
-                    "strengthen",
-                    "support",
-                    "reinforce"
-                ]
-            },
-            {
-                "word": "animus",
-                "meaning_en": "hostility or ill feeling.",
-                "meaning_hi": "शत्रुता, द्वेष",
-                "synonyms": [
-                    "hostility",
-                    "antagonism",
-                    "resentment"
-                ],
-                "antonyms": [
-                    "goodwill",
-                    "amity",
-                    "benevolence"
-                ]
-            },
-            {
-                "word": "precedent",
-                "meaning_en": "an earlier event or action that is regarded as an example or guide to be considered in subsequent similar circumstances.",
-                "meaning_hi": "मिसाल, नज़ीर",
-                "synonyms": [
-                    "example",
-                    "model",
-                    "standard"
-                ],
-                "antonyms": [
-                    "anomaly",
-                    "exception",
-                    "deviation"
+                    "Hindered",
+                    "Obstructed",
+                    "Prevented"
                 ]
             }
         ],
         "english_booster": {
             "error_spotting": {
-                "sentence": "The 6–3 rulings strengthens executive authority over immigration while sharply limiting judicial oversight.",
-                "error": "strengthens",
-                "correction": "strengthen",
-                "rule": "Subject-verb agreement: A plural subject ('rulings') requires a plural verb ('strengthen')."
+                "sentence": "The US State Department released the text of the agreement that was finalised earlier in Washington, DC, reporting Al Jazeera.",
+                "error": "reporting",
+                "correction": "reported",
+                "rule": "The sentence requires a past participle 'reported' to indicate that Al Jazeera was the source that reported the information, acting as an adverbial phrase modifying the main clause. 'Reporting' would imply Al Jazeera is actively reporting at the moment of the statement, which is not the intended meaning in this context."
             },
             "fill_in_the_blanks": {
-                "sentence": "Temporary Protected Status (TPS) is a _____ immigration program created by Congress in 1990.",
+                "sentence": "US Secretary of State Marco Rubio announced on Friday (local time) that the United States had _____ a framework agreement between Israel and Lebanon designed to promote “lasting peace and security”.",
                 "options": [
-                    "political",
-                    "humanitarian",
-                    "economic",
-                    "temporary"
+                    "brokered",
+                    "broken",
+                    "broken up",
+                    "broken down"
                 ],
-                "answer": "humanitarian"
+                "answer": "brokered"
             },
             "rearrangement": {
                 "jumbled_parts": [
-                    "The US Supreme Court has handed the Trump administration",
-                    "two major immigration wins, allowing it to end protections",
-                    "for hundreds of thousands of migrants and potentially revive",
-                    "restrictive asylum policies at the US-Mexico border."
-                ],
-                "correct_order": "ABCD"
-            }
-        }
-    },
-    {
-        "id": 4,
-        "title": "No deal with US without tariff advantage framework: Piyush Goyal at UK-India Week 2026",
-        "date": "2026-06-26",
-        "category": "General Current Affairs",
-        "cleaned_news": "Union commerce minister Piyush Goyal said India will not sign the proposed bilateral trade agreement with the US until a framework guaranteeing a comparative tariff advantage for Indian exports is finalised. India and the US have reviewed progress on the interim trade pact, covering market access, digital trade and supply chains. Both countries are working to conclude an agreement before the July 24 deadline for the expiry of Washington's temporary 10 per cent tariff regime.",
-        "bullets": [
-            "• Union commerce minister Piyush Goyal stated India will not sign the proposed bilateral trade agreement with the US.",
-            "• The agreement will not be signed until a framework guaranteeing a comparative tariff advantage for Indian exports is finalised.",
-            "• India and the US have reviewed progress on the interim trade pact.",
-            "• The interim trade pact covers market access, digital trade and supply chains.",
-            "• Both countries aim to conclude an agreement before the July 24 deadline for the expiry of Washington's temporary 10 per cent tariff regime."
-        ],
-        "vocabularies": [
-            {
-                "word": "bilateral",
-                "meaning_en": "Involving two parties, especially countries.",
-                "meaning_hi": "द्विपक्षीय",
-                "synonyms": [
-                    "two-sided",
-                    "reciprocal",
-                    "mutual"
-                ],
-                "antonyms": [
-                    "unilateral",
-                    "multilateral",
-                    "one-sided"
-                ]
-            }
-        ],
-        "english_booster": {
-            "error_spotting": {
-                "sentence": "Union commerce minister Piyush Goyal said India will not sign the proposed bilateral trade agreement with the US until a framework guaranteeing a comparative tariff advantage for Indian exports are finalised.",
-                "error": "are",
-                "correction": "is",
-                "rule": "Subject-verb agreement: The singular subject 'framework' requires the singular verb 'is'."
-            },
-            "fill_in_the_blanks": {
-                "sentence": "Both countries are working to conclude an agreement before the July 24 deadline for the expiry of Washington's temporary 10 per cent tariff _____.",
-                "options": [
-                    "system",
-                    "policy",
-                    "regime",
-                    "structure"
-                ],
-                "answer": "regime"
-            },
-            "rearrangement": {
-                "jumbled_parts": [
-                    "covering market access,",
-                    "India and the US have reviewed progress",
-                    "digital trade and supply chains.",
-                    "on the interim trade pact,"
+                    "A: forcing people to interrupt school, work,",
+                    "B: Rubio said the constant threat of attacks",
+                    "C: and other activities to seek shelter in bunkers or basements.",
+                    "D: had repeatedly disrupted everyday life,"
                 ],
                 "correct_order": "BDAC"
             }
